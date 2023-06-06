@@ -1,0 +1,280 @@
+version: "3.0"
+nlu:
+
+- intent: user_give_name
+  examples: |
+    - I am [Andrea](name)
+    - my name is [Robert](name)
+    - they call me [Isabel](name)
+    - I am known as [Felix](name)
+    - (Richard)(name)
+    - I am [Tareq](name)
+    - my name is [Hosna](name)
+    - they call me [Alejandro](name)
+    - I am known as [Till](name)
+    - my name is [Liam](name)
+    - my name is [Emma](name)
+    - my name is [Noah](name)
+    - my name is [Olivia](name)
+    - my name is [William](name)
+    - my name is [Ava](name)
+    - my name is [James](name)
+    - my name is [Isabella](name)
+    - my name is [Oliver](name)
+    - my name is [Sophia](name)
+    - my name is [Benjamin](name)
+    - my name is [Mia](name)
+    - my name is [Elijah](name)
+    - my name is [Charlotte](name)
+    - my name is [Lucas](name)
+    - my name is [Amelia](name)
+    - my name is [Mason](name)
+    - my name is [Harper](name)
+    - my name is [Logan](name)
+    - my name is [Evelyn](name)
+    - my name is [Alexander](name)
+    - my name is [Abigail](name)
+    - my name is [Ethan](name)
+    - my name is [Emily](name)
+    - my name is [Jacob](name)
+    - my name is [Elizabeth](name)
+    - my name is [Michael](name)
+    - my name is [Mila](name)
+    - my name is [Daniel](name)
+    - my name is [Ella](name)
+    - my name is [Henry](name)
+    - my name is [Avery](name)
+    - my name is [Jackson](name)
+    - my name is [Sofia](name)
+    - my name is [Sebastian](name)
+    - my name is [Camila](name)
+    - my name is [Aiden](name)
+    - my name is [Aria](name)
+    - my name is [Matthew](name)
+    - my name is [Scarlett](name)
+    - my name is [Samuel](name)
+    - my name is [Victoria](name)
+    - my name is [David](name)
+    - my name is [Madison](name)
+    - my name is [Joseph](name)
+    - my name is [Luna](name)
+    - my name is [Carter](name)
+    - my name is [Grace](name)
+    - my name is [Owen](name)
+    - my name is [Chloe](name)
+    - my name is [Wyatt](name)
+    - my name is [Penelope](name)
+    - my name is [John](name)
+    - my name is [Layla](name)
+    - my name is [Jack](name)
+    - my name is [Riley](name)
+    - my name is [Luke](name)
+    - my name is [Zoey](name)
+    - my name is [Jayden](name)
+    - my name is [Nora](name)
+    - my name is [Dylan](name)
+    - my name is [Lily](name)
+    - my name is [Grayson](name)
+    - my name is [Eleanor](name)
+    - my name is [Levi](name)
+    - my name is [Hannah](name)
+    - my name is [Isaac](name)
+    - my name is [Lillian](name)
+    - my name is [Gabriel](name)
+    - my name is [Addison](name)
+    - my name is [Julian](name)
+    - my name is [Aubrey](name)
+    - my name is [Mateo](name)
+    - my name is [Ellie](name)
+    - my name is [Anthony](name)
+    - my name is [Stella](name)
+    - my name is [Jaxon](name)
+    - my name is [Natalie](name)
+    - my name is [Lincoln](name)
+    - my name is [Zoe](name)
+    - my name is [Joshua](name)
+    - my name is [Leah](name)
+    - my name is [Christopher](name)
+    - my name is [Hazel](name)
+    - my name is [Andrew](name)
+    - my name is [Violet](name)
+    - my name is [Theodore](name)
+    - my name is [Aurora](name)
+    - my name is [Caleb](name)
+    - my name is [Savannah](name)
+    - my name is [Ryan](name)
+    - my name is [Audrey](name)
+    - my name is [Asher](name)
+    - my name is [Brooklyn](name)
+    - my name is [Nathan](name)
+    - my name is [Bella](name)
+    - my name is [Thomas](name)
+    - my name is [Claire](name)
+    - my name is [Leo](name)
+    - my name is [Skylar](name)
+    - my name is [Isaiah](name)
+    - my name is [Lucy](name)
+    - my name is [Charles](name)
+    - my name is [Paisley](name)
+    - my name is [Josiah](name)
+    - my name is [Everly](name)
+    - my name is [Hudson](name)
+
+
+
+# - intent: start
+#   examples: |
+#     - start
+#     - initialize
+#     - beginn
+#     - talk
+
+
+- intent: random_data
+  examples: |
+    - pineaple is green
+    - What is hungry
+    - What is your favorite type of fruit?
+    - Tell me about a time when you faced a difficult decision.
+    - What is the capital of Australia?
+    - What do you think is the meaning of life?
+    - Have you ever traveled to a foreign country? If so, where did you go and what was your experience like?
+    - What is the most interesting fact you know?
+    - Can you name three famous painters and one painting from each?
+    - Do you believe in aliens?
+    - Describe your dream house.
+    - The quick brown fox jumps over the lazy dog.
+    - What is your favorite type of cuisine?
+    - Tell me about a time when you accomplished something you were proud of.
+    - What is the highest mountain in the world?
+
+- intent: solve_riddle_date
+  examples: |
+    - The answer is [January](answer_date)
+    - [January first](answer_date)
+    - [January 1st](answer_date)
+    - [first of january](answer_date)
+    - [01.01](answer_date)
+    - The answer is [February](answer_date)
+    - [February first](answer_date)
+    - [February 1st](answer_date)
+    - [first of February](answer_date)
+    - [01.02](answer_date)
+    - The answer is [March](answer_date)
+    - [March first](answer_date)
+    - [March 1st](answer_date)
+    - [first of March](answer_date)
+    - [01.03](answer_date)
+    - The answer is [April](answer_date)
+    - [April first](answer_date)
+    - [April 1st](answer_date)
+    - [first of April](answer_date)
+    - [01.04](answer_date)
+    - The answer is [May](answer_date)
+    - [May first](answer_date)
+    - [May 1st](answer_date)
+    - [first of May](answer_date)
+    - [01.05](answer_date)
+    - The answer is [June](answer_date)
+    - [June first](answer_date)
+    - [June 1st](answer_date)
+    - [first of June](answer_date)
+    - The answer is [July](answer_date)
+    - [July first](answer_date)
+    - [July 1st](answer_date)
+    - [first of July](answer_date)
+    - The answer is [August](answer_date)
+    - [August first](answer_date)
+    - [August 1st](answer_date)
+    - [first of August](answer_date)
+    - The answer is [September](answer_date)
+    - [September first](answer_date)
+    - [September 1st](answer_date)
+    - [first of September](answer_date)
+    - The answer is [October](answer_date)
+    - [October first](answer_date)
+    - [October 1st](answer_date)
+    - [first of October](answer_date)
+    - The answer is [November](answer_date)
+    - [November first](answer_date)
+    - [November 1st](answer_date)
+    - [first of November](answer_date)
+    - The answer is [December](answer_date)
+    - [December first](answer_date)
+    - [December 1st](answer_date)
+    - [first of December](answer_date)
+
+- intent: get_current_room
+  examples: |
+    - where am I?
+    - which room am I?
+    - what room is this?
+    - tell me this room
+    - what is the name of this room?
+    - In which room am i?
+
+- intent: get_number_puzzle_solved
+  examples: |
+    - How many puzzles have I solved?
+    - puzzles solved?
+    - solved puzzles?
+    - tell me how many riddles I've solved
+    - How many puzzles do I have?
+
+- intent: get_current_puzzle_prompt
+  examples: |
+    - Which puzzle am I?
+    - what is the puzzle?
+    - what should I solve?
+    - What needs to be solved?
+    - give me the current puzzle?
+    - what should I do?
+    - what was the question?
+    - what is the current puzzle?
+    - give me the puzzle
+    - tell me the riddle
+    - tell me question
+    - give me information about the riddle
+    - can you repeat the riddle?
+    - could you repeat the puzzle?
+    - could you tell me the question again?
+    - give me the question one more time.
+
+
+- intent: solve_world_cup_riddle
+  examples: |
+    - [Brazil](answer_world_cup)
+    - [Argentina](answer_world_cup)
+    - [Peru](answer_world_cup)
+    - [Germany](answer_world_cup)
+    - [France](answer_world_cup)
+    - [Italy](answer_world_cup)
+    - [Poland](answer_world_cup)
+    - [Netherlands](answer_world_cup)
+    - [Spain](answer_world_cup)
+    - [USA](answer_world_cup)
+    - The country is [Mexico](answer_world_cup)
+    - The one country with the most world cups is [India](answer_world_cup)
+    - The country is [Portugal](answer_world_cup)
+
+- intent: solve_wet_riddle
+  examples: |
+    - [clothes](answer_wet)
+    - [towels](answer_wet)
+    - [shoes](answer_wet)
+    - [raincoats](answer_wet)
+    - [umbrellas](answer_wet)
+    - [plants](answer_wet)
+    - [bottles](answer_wet)
+    - [swimwears](answer_wet)
+    - [swimsuits](answer_wet)
+    - [dresses(answer_wet)
+    - [Balls](answer_wet)
+    - a [towel](answer_wet)
+    - a [raincoat](answer_wet)
+    - an [umbrella](answer_wet)
+    - a [plant](answer_wet)
+    - a [bottle](answer_wet)
+    - a [swimwear](answer_wet)
+    - a [swimsuit](answer_wet)
+    - a [dress(answer_wet)
