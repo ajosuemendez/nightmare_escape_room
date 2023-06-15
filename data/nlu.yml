@@ -287,3 +287,15 @@ nlu:
     - could you help me?
     - can you give me a hand?
     - I need help
+
+- intent: pick_something
+  examples: |
+    - pick [latop](picked_item)
+    - pick [window](picked_item)
+    - pick [picture](picked_item)
+    - grab [cup](picked_item)
+    - get [dollp](picked_item)
+    - select [chair](picked_item)
+    - grab [pen](picked_item)
+    - get [notebook](picked_item)
+    - choose [paper](picked_item)

@@ -43,3 +43,12 @@ stories:
   steps:
   - intent: get_hint
   - action: action_get_hints
+
+- story: pick something
+  steps:
+  - intent: pick_something
+    entities:
+        - picked_item: laptop
+        - slot_was_set:
+        - picked_item: laptop
+  - action: action_pick_something

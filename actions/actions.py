@@ -13,9 +13,9 @@ puzzle_prompts = {
 }
 
 puzzle_hints = {
-    "date_puzzle" : ["It is a date between December and January", "It is closer to the end of the year", "First of...."],
-    "worldcup_puzzle": ["It is the largest country in South America", "They speak portuguese in this country", "Bra..."],
-    "wet_puzzle": ["You can find this item in your bathroom", "You use it (hopefully) everyday when you take a shower", "To..."],
+    "date_puzzle" : ["It is a date between December and January", "It is closer to the end of the year", "First of....", "Even my dog would have solved this already...", "The answer is: First of January, but common bro..."],
+    "worldcup_puzzle": ["It is the largest country in South America", "They speak portuguese in this country", "Bra...", "Even my dog would have solved this already...", "The answer is: Brazil, but common bro..."],
+    "wet_puzzle": ["You can find this item in your bathroom", "You use it (hopefully) everyday when you take a shower", "To...", "Even my dog would have solved this already...", "The answer is: Towel, but common bro..."],
     "fourth_puzzle": ["There are no hints since there are no puzzles to be solved"],
 }
 
@@ -332,3 +332,19 @@ class GetHints(Action):
 
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
             return[]
+
+class ActionPickItem(Action):
+    def name(self) -> Text:
+        return "action_pick_something"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        picked_item = tracker.get_slot("picked_item")
+        # print(current_room)
+        if not picked_item:
+            dispatcher.utter_message(text="There are no items to be picked")
+        else:
+            dispatcher.utter_message(text=f"You just picked {picked_item}!")
+        return []
