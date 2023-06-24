@@ -148,136 +148,136 @@ nlu:
     - Tell me about a time when you accomplished something you were proud of.
     - What is the highest mountain in the world?
 
-- intent: solve_riddle_date
-  examples: |
-    - The answer is [January](answer_date)
-    - [January first](answer_date)
-    - [January 1st](answer_date)
-    - [first of january](answer_date)
-    - [01.01](answer_date)
-    - The answer is [February](answer_date)
-    - [February first](answer_date)
-    - [February 1st](answer_date)
-    - [first of February](answer_date)
-    - [01.02](answer_date)
-    - The answer is [March](answer_date)
-    - [March first](answer_date)
-    - [March 1st](answer_date)
-    - [first of March](answer_date)
-    - [01.03](answer_date)
-    - The answer is [April](answer_date)
-    - [April first](answer_date)
-    - [April 1st](answer_date)
-    - [first of April](answer_date)
-    - [01.04](answer_date)
-    - The answer is [May](answer_date)
-    - [May first](answer_date)
-    - [May 1st](answer_date)
-    - [first of May](answer_date)
-    - [01.05](answer_date)
-    - The answer is [June](answer_date)
-    - [June first](answer_date)
-    - [June 1st](answer_date)
-    - [first of June](answer_date)
-    - The answer is [July](answer_date)
-    - [July first](answer_date)
-    - [July 1st](answer_date)
-    - [first of July](answer_date)
-    - The answer is [August](answer_date)
-    - [August first](answer_date)
-    - [August 1st](answer_date)
-    - [first of August](answer_date)
-    - The answer is [September](answer_date)
-    - [September first](answer_date)
-    - [September 1st](answer_date)
-    - [first of September](answer_date)
-    - The answer is [October](answer_date)
-    - [October first](answer_date)
-    - [October 1st](answer_date)
-    - [first of October](answer_date)
-    - The answer is [November](answer_date)
-    - [November first](answer_date)
-    - [November 1st](answer_date)
-    - [first of November](answer_date)
-    - The answer is [December](answer_date)
-    - [December first](answer_date)
-    - [December 1st](answer_date)
-    - [first of December](answer_date)
+# - intent: solve_riddle_date
+#   examples: |
+#     - The answer is [January](answer_date)
+#     - [January first](answer_date)
+#     - [January 1st](answer_date)
+#     - [first of january](answer_date)
+#     - [01.01](answer_date)
+#     - The answer is [February](answer_date)
+#     - [February first](answer_date)
+#     - [February 1st](answer_date)
+#     - [first of February](answer_date)
+#     - [01.02](answer_date)
+#     - The answer is [March](answer_date)
+#     - [March first](answer_date)
+#     - [March 1st](answer_date)
+#     - [first of March](answer_date)
+#     - [01.03](answer_date)
+#     - The answer is [April](answer_date)
+#     - [April first](answer_date)
+#     - [April 1st](answer_date)
+#     - [first of April](answer_date)
+#     - [01.04](answer_date)
+#     - The answer is [May](answer_date)
+#     - [May first](answer_date)
+#     - [May 1st](answer_date)
+#     - [first of May](answer_date)
+#     - [01.05](answer_date)
+#     - The answer is [June](answer_date)
+#     - [June first](answer_date)
+#     - [June 1st](answer_date)
+#     - [first of June](answer_date)
+#     - The answer is [July](answer_date)
+#     - [July first](answer_date)
+#     - [July 1st](answer_date)
+#     - [first of July](answer_date)
+#     - The answer is [August](answer_date)
+#     - [August first](answer_date)
+#     - [August 1st](answer_date)
+#     - [first of August](answer_date)
+#     - The answer is [September](answer_date)
+#     - [September first](answer_date)
+#     - [September 1st](answer_date)
+#     - [first of September](answer_date)
+#     - The answer is [October](answer_date)
+#     - [October first](answer_date)
+#     - [October 1st](answer_date)
+#     - [first of October](answer_date)
+#     - The answer is [November](answer_date)
+#     - [November first](answer_date)
+#     - [November 1st](answer_date)
+#     - [first of November](answer_date)
+#     - The answer is [December](answer_date)
+#     - [December first](answer_date)
+#     - [December 1st](answer_date)
+#     - [first of December](answer_date)
 
-- intent: get_current_room
-  examples: |
-    - where am I?
-    - which room am I?
-    - what room is this?
-    - tell me this room
-    - what is the name of this room?
-    - In which room am i?
+# - intent: get_current_room
+#   examples: |
+#     - where am I?
+#     - which room am I?
+#     - what room is this?
+#     - tell me this room
+#     - what is the name of this room?
+#     - In which room am i?
 
-- intent: get_number_puzzle_solved
-  examples: |
-    - How many puzzles have I solved?
-    - puzzles solved?
-    - solved puzzles?
-    - tell me how many riddles I've solved
-    - How many puzzles do I have?
+# - intent: get_number_puzzle_solved
+#   examples: |
+#     - How many puzzles have I solved?
+#     - puzzles solved?
+#     - solved puzzles?
+#     - tell me how many riddles I've solved
+#     - How many puzzles do I have?
 
-- intent: get_current_puzzle_prompt
-  examples: |
-    - Which puzzle am I?
-    - what is the puzzle?
-    - what should I solve?
-    - What needs to be solved?
-    - give me the current puzzle?
-    - what should I do?
-    - what was the question?
-    - what is the current puzzle?
-    - give me the puzzle
-    - tell me the riddle
-    - tell me question
-    - give me information about the riddle
-    - can you repeat the riddle?
-    - could you repeat the puzzle?
-    - could you tell me the question again?
-    - give me the question one more time.
+# - intent: get_current_puzzle_prompt
+#   examples: |
+#     - Which puzzle am I?
+#     - what is the puzzle?
+#     - what should I solve?
+#     - What needs to be solved?
+#     - give me the current puzzle?
+#     - what should I do?
+#     - what was the question?
+#     - what is the current puzzle?
+#     - give me the puzzle
+#     - tell me the riddle
+#     - tell me question
+#     - give me information about the riddle
+#     - can you repeat the riddle?
+#     - could you repeat the puzzle?
+#     - could you tell me the question again?
+#     - give me the question one more time.
 
 
-- intent: solve_world_cup_riddle
-  examples: |
-    - [Brazil](answer_world_cup)
-    - [Argentina](answer_world_cup)
-    - [Peru](answer_world_cup)
-    - [Germany](answer_world_cup)
-    - [France](answer_world_cup)
-    - [Italy](answer_world_cup)
-    - [Poland](answer_world_cup)
-    - [Netherlands](answer_world_cup)
-    - [Spain](answer_world_cup)
-    - [USA](answer_world_cup)
-    - The country is [Mexico](answer_world_cup)
-    - The one country with the most world cups is [India](answer_world_cup)
-    - The country is [Portugal](answer_world_cup)
+# - intent: solve_world_cup_riddle
+#   examples: |
+#     - [Brazil](answer_world_cup)
+#     - [Argentina](answer_world_cup)
+#     - [Peru](answer_world_cup)
+#     - [Germany](answer_world_cup)
+#     - [France](answer_world_cup)
+#     - [Italy](answer_world_cup)
+#     - [Poland](answer_world_cup)
+#     - [Netherlands](answer_world_cup)
+#     - [Spain](answer_world_cup)
+#     - [USA](answer_world_cup)
+#     - The country is [Mexico](answer_world_cup)
+#     - The one country with the most world cups is [India](answer_world_cup)
+#     - The country is [Portugal](answer_world_cup)
 
-- intent: solve_wet_riddle
-  examples: |
-    - [clothes](answer_wet)
-    - [towels](answer_wet)
-    - [shoes](answer_wet)
-    - [raincoats](answer_wet)
-    - [umbrellas](answer_wet)
-    - [plants](answer_wet)
-    - [bottles](answer_wet)
-    - [swimwears](answer_wet)
-    - [swimsuits](answer_wet)
-    - [dresses(answer_wet)
-    - [Balls](answer_wet)
-    - a [towel](answer_wet)
-    - a [raincoat](answer_wet)
-    - an [umbrella](answer_wet)
-    - a [plant](answer_wet)
-    - a [bottle](answer_wet)
-    - a [swimwear](answer_wet)
-    - a [swimsuit](answer_wet)
-    - a [dress(answer_wet)
+# - intent: solve_wet_riddle
+#   examples: |
+#     - [clothes](answer_wet)
+#     - [towels](answer_wet)
+#     - [shoes](answer_wet)
+#     - [raincoats](answer_wet)
+#     - [umbrellas](answer_wet)
+#     - [plants](answer_wet)
+#     - [bottles](answer_wet)
+#     - [swimwears](answer_wet)
+#     - [swimsuits](answer_wet)
+#     - [dresses(answer_wet)
+#     - [Balls](answer_wet)
+#     - a [towel](answer_wet)
+#     - a [raincoat](answer_wet)
+#     - an [umbrella](answer_wet)
+#     - a [plant](answer_wet)
+#     - a [bottle](answer_wet)
+#     - a [swimwear](answer_wet)
+#     - a [swimsuit](answer_wet)
+#     - a [dress(answer_wet)
 
 - intent: get_hint
   examples: |
@@ -290,7 +290,14 @@ nlu:
 
 - intent: pick_something
   examples: |
-    - pick [latop](picked_item)
+    - pick [laptop ios](picked_item)
+    - pick [laptop windows](picked_item)
+    - pick the [windows](picked_item)
+    - pick the [ios] (picked_item)
+    - grab the [computer ios](picked_item)
+    - select the [laptop with the ios system](picked_item)
+    - choose the [computer with windows opearting system](picked_item)
+    - I choose the [apple laptop](picked_item)
     - pick [window](picked_item)
     - pick [picture](picked_item)
     - grab [cup](picked_item)
@@ -299,3 +306,121 @@ nlu:
     - grab [pen](picked_item)
     - get [notebook](picked_item)
     - choose [paper](picked_item)
+
+- intent: affirm_to_play
+  examples: |
+    - yes
+    - yeah
+    - sure
+    - hell yeah
+    - yeap
+    - I want to play
+    - of course
+    - why not
+    - yes, I do
+    - let's play
+    - Yes I am
+    - I am ready 
+
+- intent: deny_to_play
+  examples: |
+    - no
+    - naah
+    - nope
+    - hell nope
+    - not really
+    - not yet
+    - not now
+    - I am not ready
+    - not ready
+    - I don't want to
+    - not sure
+    - give me more time
+
+- intent: give_direction
+  examples: |
+    - [north](direction)
+    - [south](direction)
+    - [west](direction)
+    - [east](direction)
+    - no where
+    - I want to stay here
+    - anywhere
+    - go up
+    - left
+    - right
+    - up
+    - down
+    - I don't want to go
+    - there
+    - go to the [north](direction)
+    - go [south](direction)
+    - I want go [west](direction)
+    - Let's go [east](direction)
+
+- intent: give_son_answer
+  examples: |
+    - [son](son_answer)
+    - the answer is [son](son_answer)
+    - [daughter](son_answer)
+    - I believe [son](son_answer)
+    - it is [son](son_answer)
+    - Is it [daughter](son_answer)?
+    - [father](son_answer)
+    - [mother](son_answer)
+    - [sister](son_answer)
+    - [brother](son_answer)
+    - [grandfather](son_answer)
+    - [grandmother](son_answer)
+    - [niece](son_answer)
+    - [nephew](son_answer)
+    - [grandpa](son_answer)
+    - [grandma](son_answer)
+    - [cousin](son_answer)
+    - [aunt](son_answer)
+    - [uncle](son_answer)
+
+- intent: give_math_answer
+  examples: |
+    - [296](math_answer)
+    - [two hundred ninety six](math_answer)
+    - I guess is [300](math_answer)
+    - [three hundred](math_answer)
+    - I think is [150](math_answer)
+    - [hundred fifty](math_answer)
+    - I believe is [44](math_answer)
+    - [forty four](math_answer)
+    - Is it [123](math_answer)?
+    - [hundred twenty three](math_answer)
+    - [5555](math_answer)
+    - [437](math_answer)
+    - [235](math_answer)
+    - [987](math_answer)
+    - [163](math_answer)
+
+- intent: look_at
+  examples: |
+    - look inside the [pocket](looked_item)
+    - look at the [windows](looked_item)
+    - look at the [door](looked_item)
+    - look at the [wall](looked_item)
+    - look under the [table](looked_item)
+    - look behind the [board](looked_item)
+
+    
+
+
+# - intent: turn_on
+#   examples : |
+#     - turn on the laptop
+#     - turn on the computer
+#     - start the computer
+#     - start the laptop
+#     - start the windows
+#     - start the macbook
+#     - run the laptop
+#     - turn on the notebook
+#     - use the laptop
+#     - use the computer
+
+

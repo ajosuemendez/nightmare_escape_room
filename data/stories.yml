@@ -10,34 +10,75 @@ stories:
         - slot_was_set:
         - name: Alex
   - action: action_say_name
-
-
-- story: Solve first riddle
-  steps:
-  - intent: solve_riddle_date
+  - intent: affirm_to_play
+  - action: action_handle_affirmation
+  - intent: deny_to_play
+  - action: action_handle_affirmation
+  - intent: give_direction
     entities:
-      - answer_date: first of January
+      - direction: north
       - slot_was_set:
-      - answer_date: first of January
-  - action: action_say_is_date_riddle_correct
+      - direction: north
+  - action: action_handle_direction
+  # - intent: give_son_answer
+  #   entities:
+  #       - son_answer: son
+  #       - slot_was_set:
+  #       - son_answer: son
+  # - action: action_son_puzzle
+  # - intent: give_direction
+  #   entities:
+  #     - direction: south
+  #     - slot_was_set:
+  #     - direction: south
+  # - action: action_handle_direction
+  # - intent: give_math_answer
+  #   entities:
+  #       - math_answer: two hundred ninety six
+  #       - slot_was_set:
+  #       - math_answer: two hundred ninety six
+  # - action: action_math_puzzle
+  # - intent: give_direction
+  #   entities:
+  #     - direction: north
+  #     - slot_was_set:
+  #     - direction: north
+  # - action: action_handle_direction
+  # - intent: turn_on
+  #   entities:
+  #       - picked_item: laptop
+  #       - slot_was_set:
+  #       - picked_item: laptop
+  # - action: action_handle_turn_on
 
-- story: Solve second riddle
-  steps:
-  - intent: solve_world_cup_riddle
-    entities:
-      - answer_world_cup: brazil
-      - slot_was_set:
-      - answer_world_cup: brazil
-  - action: action_say_is_world_cup_riddle_correct
 
-- story: Solve third riddle
-  steps:
-  - intent: solve_wet_riddle
-    entities:
-      - answer_wet: towel
-      - slot_was_set:
-      - answer_wet: towel
-  - action: action_say_is_wet_riddle_correct
+
+# - story: Solve first riddle
+#   steps:
+#   - intent: solve_riddle_date
+#     entities:
+#       - answer_date: first of January
+#       - slot_was_set:
+#       - answer_date: first of January
+#   - action: action_say_is_date_riddle_correct
+
+# - story: Solve second riddle
+#   steps:
+#   - intent: solve_world_cup_riddle
+#     entities:
+#       - answer_world_cup: brazil
+#       - slot_was_set:
+#       - answer_world_cup: brazil
+#   - action: action_say_is_world_cup_riddle_correct
+
+# - story: Solve third riddle
+#   steps:
+#   - intent: solve_wet_riddle
+#     entities:
+#       - answer_wet: towel
+#       - slot_was_set:
+#       - answer_wet: towel
+#   - action: action_say_is_wet_riddle_correct
 
 - story: tell current hint
   steps:
@@ -52,3 +93,39 @@ stories:
         - slot_was_set:
         - picked_item: laptop
   - action: action_pick_something
+
+- story: look at something
+  steps:
+  - intent: look_at
+    entities:
+        - looked_item: pocket
+        - slot_was_set:
+        - looked_item: pocket
+  - action: action_look_at
+
+- story: give directions
+  steps:
+  - intent: give_direction
+    entities:
+      - direction: south
+      - slot_was_set:
+      - direction: south
+  - action: action_handle_direction
+
+- story: math puzzle
+  steps:
+  - intent: give_math_answer
+    entities:
+        - math_answer: two hundred ninety six
+        - slot_was_set:
+        - math_answer: two hundred ninety six
+  - action: action_math_puzzle
+
+- story: son puzzle
+  steps:
+  - intent: give_son_answer
+    entities:
+        - son_answer: son
+        - slot_was_set:
+        - son_answer: son
+  - action: action_son_puzzle

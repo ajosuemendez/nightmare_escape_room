@@ -1,0 +1,52 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-direction",
+      "2": "I-direction",
+      "3": "L-direction",
+      "4": "U-direction",
+      "5": "B-math_answer",
+      "6": "I-math_answer",
+      "7": "L-math_answer",
+      "8": "U-math_answer",
+      "9": "B-name",
+      "10": "I-name",
+      "11": "L-name",
+      "12": "U-name",
+      "13": "B-picked_item",
+      "14": "I-picked_item",
+      "15": "L-picked_item",
+      "16": "U-picked_item",
+      "17": "B-son_answer",
+      "18": "I-son_answer",
+      "19": "L-son_answer",
+      "20": "U-son_answer",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-direction": 1,
+      "I-direction": 2,
+      "L-direction": 3,
+      "U-direction": 4,
+      "B-math_answer": 5,
+      "I-math_answer": 6,
+      "L-math_answer": 7,
+      "U-math_answer": 8,
+      "B-name": 9,
+      "I-name": 10,
+      "L-name": 11,
+      "U-name": 12,
+      "B-picked_item": 13,
+      "I-picked_item": 14,
+      "L-picked_item": 15,
+      "U-picked_item": 16,
+      "B-son_answer": 17,
+      "I-son_answer": 18,
+      "L-son_answer": 19,
+      "U-son_answer": 20,
+      "O": 0
+    },
+    "num_tags": 21
+  }
+]
