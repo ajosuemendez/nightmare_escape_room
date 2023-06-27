@@ -21,6 +21,7 @@ intents:
 - give_son_answer
 - give_math_answer
 - look_at
+- switch_room
 # - turn_on
 
 entities:
@@ -47,6 +48,7 @@ entities:
 - math_answer
 - is_math_puzzle_solved
 - looked_item
+- current_room
 
 
 slots:
@@ -197,6 +199,7 @@ slots:
     - type: from_entity
       entity: math_answer
   
+  
   is_son_puzzle_solved:
     type: bool
     initial_value: false
@@ -212,6 +215,13 @@ slots:
     mappings:
     - type: from_entity
       entity: is_math_puzzle_solved
+
+  current_room:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: current_room
 
 responses:
   utter_random_thing:
@@ -236,3 +246,4 @@ actions:
 - action_math_puzzle
 - action_look_at
 # - action_handle_turn_on
+- action_set_room

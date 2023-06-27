@@ -568,6 +568,25 @@ class ActionPickItem(Action):
 
         picked_item = tracker.get_slot("picked_item")
         # print(current_room)
+        current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
+
+        if current_puzzle_to_be_solve: 
+            if picked_item:
+                if current_puzzle_to_be_solve == "oxygen_puzzle":
+                    if picked_item == "suit":
+                        dispatcher.utter_message("Yes!! You put the suit on!!!")
+                        return[SlotSet("current_puzzle_to_solve", "planet_puzzle")]
+                    else:
+                        current_lives = tracker.get_slot("lives")
+                        if current_lives:
+                            dispatcher.utter_message("You picked the wrong one!")
+                            dispatcher.utter_message(text=f"You have lost 1 life! You have {current_lives-1} lives left.")
+                            return[SlotSet("lives", current_lives-1)]
+                        return[]
+            # else:
+            #     dispatcher.utter_message("You already have the suit on!!")
+            #     return[]
+
         if picked_item:
             if picked_item == "laptop" or picked_item == "computer" or picked_item == "notebook":
                 dispatcher.utter_message("Please select one of the 2 existing types of laptops! (Ios or Windows)")
@@ -609,3 +628,54 @@ class ActionLookItem(Action):
         else:
             dispatcher.utter_message(f"There is nothing to look at")
         return []
+
+
+class ActionSetRoom(Action):
+    def name(self) -> Text:
+        return "action_set_room"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        current_room = tracker.get_slot("current_room")
+
+        if current_room:
+            dispatcher.utter_message(f"You are at Tareq Room!")
+            dispatcher.utter_message(f"You find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
+            dispatcher.utter_message(f"What do you do??")
+            return [SlotSet("current_room", "Tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
+        else:
+            dispatcher.utter_message(f"No room to go to!")
+            return[]
+
+
+class ActionOxygenPuzzle(Action):
+
+    def __init__(self):
+        self.puzzle_name = "oxygen_puzzle"
+
+    def name(self) -> Text:
+        return "action_oxygen_puzzle"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
+        current_item = tracker.get_slot("picked_item")
+
+        if current_puzzle_to_be_solve and current_item:
+            if current_puzzle_to_be_solved == self.puzzle_name:
+                if current_item == "suit":
+                    dispatcher.utter_message("Yes!! You put the suit on!!!")
+                    
+                    return[SlotSet("current_puzzle_to_solve", "planet_puzzle")]
+                else:
+                    dispatcher.utter_message("You picked the wrong one!")
+                    dispatcher.utter_message(text=f"You have lost 1 life! You have {current_lives-1} lives left.")
+                    return[SlotSet("lives", current_lives-1)]
+            else:
+                dispatcher.utter_message("You already have the suit on!!")
+                return[]
+            

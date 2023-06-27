@@ -294,17 +294,23 @@ nlu:
     - pick [laptop windows](picked_item)
     - pick the [windows](picked_item)
     - pick the [ios] (picked_item)
+    - pick [suit](picked_item)
+    - pick space [suit](picked_item)
     - grab the [computer ios](picked_item)
     - select the [laptop with the ios system](picked_item)
+    - select the [suit](picked_item)
     - choose the [computer with windows opearting system](picked_item)
     - I choose the [apple laptop](picked_item)
+    - I choose the [suit](picked_item)
     - pick [window](picked_item)
     - pick [picture](picked_item)
     - grab [cup](picked_item)
     - get [dollp](picked_item)
     - select [chair](picked_item)
     - grab [pen](picked_item)
+    - grab [suit](picked_item)
     - get [notebook](picked_item)
+    - get [suit](picked_item)
     - choose [paper](picked_item)
 
 - intent: affirm_to_play
@@ -407,7 +413,13 @@ nlu:
     - look under the [table](looked_item)
     - look behind the [board](looked_item)
 
-    
+- intent: switch_room
+  examples: |
+    - go to [Tareq](current_room) room
+    - go into [Hosna](current_room) room
+    - go room [Tareq](current_room)
+    - switch to room [Tareq](current_room)
+    - go [Tareq](current_room)
 
 
 # - intent: turn_on
