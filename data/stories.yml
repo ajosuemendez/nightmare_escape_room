@@ -130,6 +130,15 @@ stories:
         - son_answer: son
   - action: action_son_puzzle
 
+- story: planet puzzle
+  steps:
+  - intent: give_planet_answer
+    entities:
+        - planet_answer: venus
+        - slot_was_set:
+        - planet_answer: venus
+  - action: action_planet_puzzle
+
 
 - story: set current room
   steps:
@@ -139,3 +148,8 @@ stories:
         - slot_was_set:
         - current_room: Tareq
   - action: action_set_room
+
+- story: activate protocols
+  steps:
+  - intent: activate
+  - action: action_activate_puzzle

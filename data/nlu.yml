@@ -421,6 +421,34 @@ nlu:
     - switch to room [Tareq](current_room)
     - go [Tareq](current_room)
 
+- intent: activate
+  examples: |
+    - activate protocols
+    - activate emergency
+    - activate emergency protocols
+    - please activate the emergency protocols
+    - activation protocols
+
+- intent: give_planet_answer
+  examples: |
+    - [Mercury](planet_answer)
+    - [Venus](planet_answer)
+    - [Earth](planet_answer)
+    - [Mars](planet_answer)
+    - [Jupiter](planet_answer)
+    - [Saturn](planet_answer)
+    - [Uranus](planet_answer)
+    - [Neptune](planet_answer)
+    - [Pluto](planet_answer)
+    - The planet [Mercury](planet_answer)
+    - is it [Venus](planet_answer)?
+    - I believe it is the planet [Earth](planet_answer)
+    - the answer is [Mars](planet_answer)
+    - planet [Jupiter](planet_answer)
+    - celestial plenet [Saturn](planet_answer)
+    - [moon](planet_answer)
+    - the [moon](planet_answer)
+
 
 # - intent: turn_on
 #   examples : |
