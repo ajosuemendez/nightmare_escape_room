@@ -7,6 +7,10 @@ rules:
   - intent: random_data
   - action: utter_random_thing
 
+- rule: affirmation
+  steps:
+  - intent: affirmation
+  - action: utter_affirmation
 # - rule: Initialize chat
 #   steps:
 #   - intent: start

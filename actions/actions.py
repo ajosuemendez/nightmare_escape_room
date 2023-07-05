@@ -16,19 +16,18 @@ from rasa_sdk.executor import CollectingDispatcher
 # }
 
 puzzle_hints = {
-    "date_puzzle" : ["It is a date between December and January", "It is closer to the end of the year", "First of...."],
-    "worldcup_puzzle": ["It is the largest country in South America", "They speak portuguese in this country", "Bra..."],
-    "wet_puzzle": ["You can find this item in your bathroom", "You use it (hopefully) everyday when you take a shower", "To..."],
-    "fourth_puzzle": ["There are no hints since there are no puzzles to be solved"],
     "son_puzzle": ["You can have it if you are married", "when they grow up they can become super annoying like Till", "It starts with S and ends with ON"],
     "math_puzzle": ["There is a relation between the actual sum of the numbers and the ones which have been assumed!", "It is easier than you think! The multiplication grows sequentially!", "It is a 3 digit numbers and it start with a 2"],
     "east_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
     "north_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
     "south_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
+    "chess_puzzle": ["Pay attention to the activities of other people! They may need another one to accomplish their job!!", "Maybe he is involved with another one!", "There is a Person who cannot do their job without another person."],
     "oxygen_puzzle":["You are currently in a Spaceship during an emergency, ALSO OXYGEN IS VERY IMPORTANT", "It is an item that astronauts have to use when they go out to work", "The Item name start with the letter 'S'"],
     "activate_puzzle": ["Activating Emergency protocols is usually from the cockpit computer, you must activate them ASAP", "Make sure to ACTIVATE the protocols!"],
     "planet_puzzle": ["It is the hottest planet in our solar system", "It is named after a roman goddes, whose functions encompass love, beauty, desire", "The name start with the letter 'V'"],
-    "moon_puzzle": ["The natural satellite that orbits Earth", "It is white and fairytales say it is made out of cheese", "It starts with the letter 'M'"]
+    "moon_puzzle": ["The natural satellite that orbits Earth", "It is white and fairytales say it is made out of cheese", "It starts with the letter 'M'"],
+    "open_puzzle":["Try opening the box"],
+    "fish_puzzle":["Try giving the fish"],
 }
 
 class ActionSayName(Action):
@@ -66,7 +65,16 @@ class ActionAffirmStartGame(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        is_already_started = tracker.get_slot("is_already_started")
+        if is_already_started:
+            name = tracker.get_slot("name")
+            if name:
+                dispatcher.utter_message(f"Hey Focus on the game {name}!")
+                return[]
+            dispatcher.utter_message("Hey Focus on the game!")
+            return[]
         intent = tracker.get_intent_of_latest_message()
+        
 
         if intent == "affirm_to_play":
             dispatcher.utter_message("You woke up in the center of the room! On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
@@ -275,6 +283,18 @@ class GetHints(Action):
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
             return[SlotSet("south_puzzle_hint_count", current_hint_attempt + 1)]
 
+        if current_puzzle == "chess_puzzle":
+            current_hint_attempt = tracker.get_slot("chess_puzzle_hint_count")
+            if current_hint_attempt is None:
+                current_hint_attempt = 0
+                
+            if current_hint_attempt > 2:
+                current_hint_attempt = 2
+
+            dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+            return[SlotSet("chess_puzzle_hint_count", current_hint_attempt + 1)]
+
+
         if current_puzzle == "oxygen_puzzle":
             current_hint_attempt = tracker.get_slot("oxygen_puzzle_hint_count")
             if current_hint_attempt is None:
@@ -318,6 +338,28 @@ class GetHints(Action):
 
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
             return[SlotSet("moon_puzzle_hint_count", current_hint_attempt + 1)]
+
+        if current_puzzle == "open_puzzle":
+            current_hint_attempt = tracker.get_slot("open_puzzle_hint_count")
+            if current_hint_attempt is None:
+                current_hint_attempt = 0
+                
+            if current_hint_attempt > 0:
+                current_hint_attempt = 0
+
+            dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+            return[SlotSet("open_puzzle_hint_count", current_hint_attempt + 1)]
+
+        if current_puzzle == "fish_puzzle":
+            current_hint_attempt = tracker.get_slot("fish_puzzle_hint_count")
+            if current_hint_attempt is None:
+                current_hint_attempt = 0
+                
+            if current_hint_attempt > 0:
+                current_hint_attempt = 0
+
+            dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+            return[SlotSet("fish_puzzle_hint_count", current_hint_attempt + 1)]
 
 
 class ActionPickItem(Action):
@@ -386,7 +428,12 @@ class ActionLookItem(Action):
         looked_item = tracker.get_slot("looked_item")
 
         if looked_item:
-            dispatcher.utter_message(f"You are looking at the {looked_item}")
+            if looked_item == "pocket":
+                dispatcher.utter_message("You found the last puzzle, the answer is the password for the safe box next to the doll!")
+                dispatcher.utter_message("There are 4 people in a room, Sam is reading, Mahsa is watching TV, Rayan is playing chess, what Sepehr is doing?")
+                return[SlotSet("current_puzzle_to_solve", "chess_puzzle")]
+            else:
+                dispatcher.utter_message(f"You are looking at the {looked_item}")
         else:
             dispatcher.utter_message(f"There is nothing to look at")
         return []
@@ -503,3 +550,73 @@ class ActionPlanetPuzzle(Action):
 
         dispatcher.utter_message("Sorry but you have to rephrase your message.")
         return[]
+
+
+class ActionplayActivity(Action):
+    def name(self) -> Text:
+        return "action_play_activity"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        play_action = tracker.get_slot("play_action")
+
+        if play_action:
+            if play_action.lower() == "chess":
+                dispatcher.utter_message("Correct! Now Open the box!")
+                dispatcher.utter_message("what do you want to do?")
+                return[SlotSet("current_puzzle_to_solve", "open_puzzle")]
+
+            else:
+                dispatcher.utter_message(f"Sorry try again!")
+        else:
+            dispatcher.utter_message(f"Sorry I did not get it. Please rephrase your message")
+        return []
+
+
+class ActionOpen(Action):
+    def name(self) -> Text:
+        return "action_open"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        open_item = tracker.get_slot("open_item")
+
+        if open_item:
+            if open_item.lower() == "box":
+                dispatcher.utter_message("There are several fishes in the box, Maybe if you give them to him, he will move!")
+                dispatcher.utter_message("What do you want to do?")
+                return[SlotSet("current_puzzle_to_solve", "fish_puzzle")]
+
+            else:
+                dispatcher.utter_message(f"Sorry try again!")
+        else:
+            dispatcher.utter_message(f"Sorry I did not get it. Please rephrase your message")
+        return []
+
+
+class ActionGiveItem(Action):
+    def name(self) -> Text:
+        return "action_give_item"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        give_item = tracker.get_slot("give_item")
+
+        if give_item:
+            if give_item.lower() == "fish" or play_action.lower() == "fishes" :
+                dispatcher.utter_message("He moved, you are free now!")
+                dispatcher.utter_message("Heyyyy you are out of her nightmare but you woke up and you find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
+                dispatcher.utter_message(f"What do you do??")
+                return [SlotSet("current_room", "Tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
+
+            else:
+                dispatcher.utter_message(f"Sorry try again!")
+        else:
+            dispatcher.utter_message(f"Sorry I did not get it. Please rephrase your message")
+        return []

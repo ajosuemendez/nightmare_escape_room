@@ -153,3 +153,31 @@ stories:
   steps:
   - intent: activate
   - action: action_activate_puzzle
+
+- story: play activity
+  steps:
+  - intent: play_activity
+    entities:
+        - play_action: chess
+        - slot_was_set:
+        - play_action: chess
+  - action: action_play_activity
+
+- story: open
+  steps:
+  - intent: open
+    entities:
+        - open_item: box
+        - slot_was_set:
+        - open_item: box
+  - action: action_open
+
+
+- story: give object
+  steps:
+  - intent: give_object
+    entities:
+        - give_item: fish
+        - slot_was_set:
+        - give_item: fish
+  - action: action_give_item
