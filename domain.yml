@@ -16,7 +16,7 @@ intents:
 - give_son_answer
 - give_math_answer
 - look_at
-- switch_room
+# - switch_room
 - activate
 - give_planet_answer
 - play_activity
@@ -282,7 +282,7 @@ actions:
 - action_son_puzzle
 - action_math_puzzle
 - action_look_at
-- action_set_room
+# - action_set_room
 - action_activate_puzzle
 - action_planet_puzzle
 - action_moon_puzzle

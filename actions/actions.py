@@ -378,7 +378,7 @@ class ActionPickItem(Action):
             if picked_item:
                 if current_puzzle_to_be_solve == "oxygen_puzzle":
                     if picked_item == "suit":
-                        dispatcher.utter_message("Yes! You out on the space suit and you take a deep breath.")
+                        dispatcher.utter_message("Yes! You put on the space suit and you take a deep breath.")
                         return[SlotSet("current_puzzle_to_solve", "activate_puzzle")]
                     else:
                         current_lives = tracker.get_slot("lives")
@@ -439,24 +439,24 @@ class ActionLookItem(Action):
         return []
 
 
-class ActionSetRoom(Action):
-    def name(self) -> Text:
-        return "action_set_room"
+# class ActionSetRoom(Action):
+#     def name(self) -> Text:
+#         return "action_set_room"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        current_room = tracker.get_slot("current_room")
+#         current_room = tracker.get_slot("current_room")
 
-        if current_room:
-            dispatcher.utter_message(f"You are at Tareq Room!")
-            dispatcher.utter_message(f"You find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
-            dispatcher.utter_message(f"What do you do??")
-            return [SlotSet("current_room", "Tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
-        else:
-            dispatcher.utter_message(f"No room to go to!")
-            return[]
+#         if current_room:
+#             dispatcher.utter_message(f"You are at Tareq Room!")
+#             dispatcher.utter_message(f"You find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
+#             dispatcher.utter_message(f"What do you do??")
+#             return [SlotSet("current_room", "Tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
+#         else:
+#             dispatcher.utter_message(f"No room to go to!")
+#             return[]
 
 class ActionActivatePuzzle(Action):
 
@@ -539,7 +539,7 @@ class ActionPlanetPuzzle(Action):
                 if planet_answer:
                     if planet_answer.lower() == "moon":
                         dispatcher.utter_message("That's correct!")
-                        dispatcher.utter_message("You take a deep breath and exhale in relief knowing that you are on your way home, the door is unlocked and you go to the next room, your keyword is 'ARE'")
+                        dispatcher.utter_message("You take a deep breath and exhale in relief knowing that you are on your way home, the door is unlocked and you go to the next room, your next keyword is 'ARE'")
                         return[SlotSet("current_puzzle_to_solve", "till_puzzle"), SlotSet("current_room", "Till_room")]
                     else:
                         current_lives = tracker.get_slot("lives")
@@ -609,8 +609,9 @@ class ActionGiveItem(Action):
         give_item = tracker.get_slot("give_item")
 
         if give_item:
-            if give_item.lower() == "fish" or play_action.lower() == "fishes" :
+            if give_item.lower() == "fish" or give_item.lower() == "fishes" :
                 dispatcher.utter_message("He moved, you are free now!")
+                dispatcher.utter_message("The first word for the secret key is 'YOU'")
                 dispatcher.utter_message("Heyyyy you are out of her nightmare but you woke up and you find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
                 dispatcher.utter_message(f"What do you do??")
                 return [SlotSet("current_room", "Tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]

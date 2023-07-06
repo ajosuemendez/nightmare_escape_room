@@ -140,14 +140,14 @@ stories:
   - action: action_planet_puzzle
 
 
-- story: set current room
-  steps:
-  - intent: switch_room
-    entities:
-        - current_room: Tareq
-        - slot_was_set:
-        - current_room: Tareq
-  - action: action_set_room
+# - story: set current room
+#   steps:
+#   - intent: switch_room
+#     entities:
+#         - current_room: Tareq
+#         - slot_was_set:
+#         - current_room: Tareq
+#   - action: action_set_room
 
 - story: activate protocols
   steps:

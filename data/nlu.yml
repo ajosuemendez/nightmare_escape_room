@@ -438,13 +438,13 @@ nlu:
     - look under the [table](looked_item)
     - look behind the [board](looked_item)
 
-- intent: switch_room
-  examples: |
-    - go to [Tareq](current_room) room
-    - go into [Hosna](current_room) room
-    - go room [Tareq](current_room)
-    - switch to room [Tareq](current_room)
-    - go [Tareq](current_room)
+# - intent: switch_room
+#   examples: |
+#     - go to [Tareq](current_room) room
+#     - go into [Hosna](current_room) room
+#     - go room [Tareq](current_room)
+#     - switch to room [Tareq](current_room)
+#     - go [Tareq](current_room)
 
 - intent: activate
   examples: |
