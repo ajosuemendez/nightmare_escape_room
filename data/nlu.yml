@@ -337,6 +337,10 @@ nlu:
     - get [notebook](picked_item)
     - get [suit](picked_item)
     - choose [paper](picked_item)
+    - take [windows](picked_item)
+    - take [apple](picked_item)
+    - [windows](picked_item)
+    - [mac](picked_item)
 
 - intent: affirm_to_play
   examples: |

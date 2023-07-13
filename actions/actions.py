@@ -18,9 +18,9 @@ from rasa_sdk.executor import CollectingDispatcher
 puzzle_hints = {
     "son_puzzle": ["You can have it if you are married", "when they grow up they can become super annoying like Till", "It starts with S and ends with ON"],
     "math_puzzle": ["There is a relation between the actual sum of the numbers and the ones which have been assumed!", "It is easier than you think! The multiplication grows sequentially!", "It is a 3 digit numbers and it start with a 2"],
-    "east_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
+    "east_puzzle": ["I suggest to look around", "look for something related to the answer to the previous puzzle in another direction!"],
     "north_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
-    "south_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
+    "south_puzzle": ["There is something common in this part and the picture on the laptop", "you can figure it out from the answer of the previous puzzle!"],
     "chess_puzzle": ["Pay attention to the activities of other people! They may need another one to accomplish their job!!", "Maybe he is involved with another one!", "There is a Person who cannot do their job without another person."],
     "oxygen_puzzle":["You are currently in a Spaceship during an emergency, ALSO OXYGEN IS VERY IMPORTANT", "It is an item that astronauts have to use when they go out to work", "The Item name start with the letter 'S'"],
     "activate_puzzle": ["Activating Emergency protocols is usually from the cockpit computer, you must activate them ASAP", "Make sure to ACTIVATE the protocols!"],
@@ -28,6 +28,7 @@ puzzle_hints = {
     "moon_puzzle": ["The natural satellite that orbits Earth", "It is white and fairytales say it is made out of cheese", "It starts with the letter 'M'"],
     "open_puzzle":["Try opening the box"],
     "fish_puzzle":["Try giving the fish"],
+    "direction_puzzle": ["I suggest you to choose a direction to go!"]
 }
 
 class ActionSayName(Action):
@@ -40,19 +41,24 @@ class ActionSayName(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         name = tracker.get_slot("name")
+        current_room = tracker.get_slot("current_room")
+
         if not name:
             dispatcher.utter_message(text="I don't know your name.")
             return[]
+
+        if current_room:
+            if current_room != "hosna_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
         else:
             if tracker.get_slot("current_puzzle_to_solve") is None:
-                dispatcher.utter_message(text=f"Hi {name}, Delwan is a young programmer. She was working on a Chabot game while she felt in sleep. Suddenly she heard a voice and woke up, but not in reality!! She found herself in her nightmare. The moment you start playing the game in this room you got stuck in the room with her, she is fuzzy and cannot figure out how to escape this room. You should help her or you both will stay here for everrrrrrrr. First of all you should know that you need a password to open the door but there is a problem!")
-                dispatcher.utter_message(text="If you enter the wrong password three times You will get pineapple pizza! ")
-                dispatcher.utter_message(text="Be careful and pay attention to every objects that you read about.")
-                
-                dispatcher.utter_message(text="You have to solve three puzzles to achieve the password! The answer to the first puzzle is the clue for the second one and the second one's answer is the clue for the last one! By solving the last puzzle you will receive the password!")
+                dispatcher.utter_message(text=f"Hi {name}, Delwan is a young programmer who was working on a Chabot game when she suddenly fell asleep. In her dream, she heard a voice and woke up, but to her surprise, she found herself trapped in her own nightmare. As you begin playing the game in this room, you become stuck with her. Delwan is confused and unable to figure out how to escape. Your help is crucial, or both of you will remain trapped forever! First and foremost, you should know that you need a password to open the door. However, there's a problem: if you enter the wrong password three times, the game will be over!!!")
+                dispatcher.utter_message(text="Be careful and pay attention to all the objects you come across. To obtain the password, you must solve three puzzles. The answer to the first puzzle will be a clue for the second one, and the answer to the second puzzle will be a clue for the last one. By solving the final puzzle, you will receive the password!")
+                dispatcher.utter_message(text="You can always ask for help anytime!")
                 dispatcher.utter_message(text="Are you ready to start?")
 
-                return [SlotSet("name", name), SlotSet("current_puzzle_to_solve", "date_puzzle"), SlotSet("lives", 10)]
+                return [SlotSet("name", name), SlotSet("current_puzzle_to_solve", "direction_puzzle"), SlotSet("lives", 10), SlotSet("current_room", "hosna_room")]
             else:
                 dispatcher.utter_message(text=f"Sorry I don't understand. Can you rephrase it?")
                 return []
@@ -74,17 +80,31 @@ class ActionAffirmStartGame(Action):
             dispatcher.utter_message("Hey Focus on the game!")
             return[]
         intent = tracker.get_intent_of_latest_message()
+
+        name = tracker.get_slot("name")
+        if name is None:
+            dispatcher.utter_message("Hey you must tell me your name first!")
+            return[]
         
 
         if intent == "affirm_to_play":
-            dispatcher.utter_message("You woke up in the center of the room! On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("You woke up in the center of the room!")
+            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
             dispatcher.utter_message("Which direction do you want to go?")
         elif intent == "deny_to_play":
             dispatcher.utter_message("I was just being nice! You have no choice! Play or die!")
+            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("Which direction do you want to go?")
         else:
             dispatcher.utter_message("I'm sorry, I didn't understand. Can you please clarify?")
 
-        return []
+        return [SlotSet("is_already_started", True)]
 
 class ActionGiveDirection(Action):
 
@@ -96,6 +116,15 @@ class ActionGiveDirection(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         direction = tracker.get_slot("direction")
+        current_room = tracker.get_slot("current_room")
+
+        name = tracker.get_slot("name")
+
+
+        if current_room:
+            if current_room != "hosna_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
 
         if direction:
             if direction == "west":
@@ -105,7 +134,7 @@ class ActionGiveDirection(Action):
                     return []
 
                 dispatcher.utter_message("There is a puzzle on the board")
-                dispatcher.utter_message('"Brothers and sisters have I none, but the father of the man is the father of my son, what is his relationship to me?"')
+                dispatcher.utter_message("Brothers and sisters have I none, but the father of the man is the father of my son, what is the man's relationship to me?")
                 return [SlotSet("current_puzzle_to_solve", "son_puzzle")]
 
             if direction == "east":
@@ -113,7 +142,7 @@ class ActionGiveDirection(Action):
                 if is_puzzle_already_solved:
                     dispatcher.utter_message(text=f"You have already solved this puzzle, look around any other part of the room")
                     return []
-                dispatcher.utter_message("There are two laptops on the table you are able to select one of them. Be careful! you only have one choice! One of them works with IOS operating system and one of them with windows!")
+                dispatcher.utter_message("There are two laptops on the table. You are able to select one of them. Be careful! If you choose the wrong one you will lose three lives! One of them works with IOS operating system and the other one with windows! Which one do you want?")
                 return [SlotSet("current_puzzle_to_solve", "east_puzzle")]
             if direction == "north":
                 dispatcher.utter_message("You are enjoying a beautiful sunset from the window or maybe windows.")
@@ -137,6 +166,15 @@ class ActionSonPuzzle(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        name = tracker.get_slot("name")
+
+        current_room = tracker.get_slot("current_room")
+        if current_room:
+            if current_room != "hosna_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
+
 
         is_puzzle_already_solved = tracker.get_slot("is_son_puzzle_solved")
         if is_puzzle_already_solved:
@@ -172,6 +210,15 @@ class ActionMathPuzzle(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        name = tracker.get_slot("name")
+
+        current_room = tracker.get_slot("current_room")
+        if current_room:
+            if current_room != "hosna_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
+
+
         is_puzzle_already_solved = tracker.get_slot("is_math_puzzle_solved")
         if is_puzzle_already_solved:
             dispatcher.utter_message(text=f"You are talking nonsenses")
@@ -188,7 +235,9 @@ class ActionMathPuzzle(Action):
 
         if math_answer:
             if math_answer.lower() == "two hundred ninety six" or math_answer == "296":
-                dispatcher.utter_message("You see a polar bear on the desktop, It is so cute with a pocket full of fish! (weird!!! Why a bear should have a pocket????)")
+                
+                dispatcher.utter_message(text=f"Right! You are doing well!")
+                dispatcher.utter_message(text=f"You see a polar bear on the desktop, It is so cute with a pocket full of fish! (Weird!!! Why a bear should have a pocket????)")
                 dispatcher.utter_message(text=f"Where do you wanna go now?")
                 return[SlotSet("is_math_puzzle_solved", True)]
                 # return[]
@@ -361,6 +410,10 @@ class GetHints(Action):
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
             return[SlotSet("fish_puzzle_hint_count", current_hint_attempt + 1)]
 
+        if current_puzzle == "direction_puzzle":
+            dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][0]}")
+            return[]
+
 
 class ActionPickItem(Action):
     def name(self) -> Text:
@@ -407,7 +460,7 @@ class ActionPickItem(Action):
 
             elif picked_item.lower().find("windows") != -1:
                 dispatcher.utter_message("You can see a puzzle on the screen saver, solve it to turn it on!")
-                dispatcher.utter_message("according to the first three equations, try to find the answer to the fourth one: 21+10=31\n22+20=84\n23+30=159\n24+50=?")
+                dispatcher.utter_message("according to the first three equations, try to find the answer to the fourth one: \n21+10=31\n22+20=84\n23+30=159\n24+50=?")
                 return [SlotSet("current_puzzle_to_solve", "math_puzzle")]
             else:
                 dispatcher.utter_message(f"You just picked {picked_item}!")
@@ -429,9 +482,12 @@ class ActionLookItem(Action):
 
         if looked_item:
             if looked_item == "pocket":
-                dispatcher.utter_message("You found the last puzzle, the answer is the password for the safe box next to the doll!")
+                dispatcher.utter_message("You found the last puzzle in his pocket")
                 dispatcher.utter_message("There are 4 people in a room, Sam is reading, Mahsa is watching TV, Rayan is playing chess, what Sepehr is doing?")
                 return[SlotSet("current_puzzle_to_solve", "chess_puzzle")]
+            if looked_item.lower() == "son":
+                dispatcher.utter_message("There is no son but there is a beautiful sunset in the north!")
+                return[]
             else:
                 dispatcher.utter_message(f"You are looking at the {looked_item}")
         else:
@@ -470,6 +526,15 @@ class ActionActivatePuzzle(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        name = tracker.get_slot("name")
+
+        current_room = tracker.get_slot("current_room")
+        name = tracker.get_slot("name")
+        if current_room:
+            if current_room != "tareq_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
+
         is_puzzle_already_solved = tracker.get_slot("is_planet_puzzle_solved")
         if is_puzzle_already_solved:
             dispatcher.utter_message(text=f"You already activated emergency protocols")
@@ -481,13 +546,6 @@ class ActionActivatePuzzle(Action):
                 dispatcher.utter_message("In order to activate the emergency protocols you need to solve the following puzzle")
                 dispatcher.utter_message("What is the second planet from the Sun, often referred to as Earth's twin?")
                 return[SlotSet("current_puzzle_to_solve", "planet_puzzle")]
-
-        
-        current_room = tracker.get_slot("current_room")
-        if current_room:
-            if current_room != "Tareq_room":
-                dispatcher.utter_message("I'm sorry but you have to rephrase your message.")
-                return[]
 
 
         current_lives = tracker.get_slot("lives")
@@ -515,6 +573,14 @@ class ActionPlanetPuzzle(Action):
         # if is_puzzle_already_solved:
         #     dispatcher.utter_message(text=f"You already solved the venus puzzle")
         #     return []
+
+        name = tracker.get_slot("name")
+
+        current_room = tracker.get_slot("current_room")
+        if current_room:
+            if current_room != "tareq_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
 
         planet_answer = tracker.get_slot("planet_answer")
 
@@ -560,13 +626,26 @@ class ActionplayActivity(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        name = tracker.get_slot("name")
+
+        current_room = tracker.get_slot("current_room")
+        if current_room:
+            if current_room != "hosna_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
+
         play_action = tracker.get_slot("play_action")
 
         if play_action:
             if play_action.lower() == "chess":
-                dispatcher.utter_message("Correct! Now Open the box!")
-                dispatcher.utter_message("what do you want to do?")
-                return[SlotSet("current_puzzle_to_solve", "open_puzzle")]
+                dispatcher.utter_message("Awesome! The box is open with the first word of the final password: 'YOU' ")
+                dispatcher.utter_message("Congratulations! You have successfully completed the first room!")
+                dispatcher.utter_message("The fun does not stop here, you are out of her nightmare but you woke up and you find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
+                dispatcher.utter_message(f"What do you do??")
+                # dispatcher.utter_message("what do you want to do?")
+                # return[SlotSet("current_puzzle_to_solve", "open_puzzle")]
+                return [SlotSet("current_room", "tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
+
 
             else:
                 dispatcher.utter_message(f"Sorry try again!")
@@ -582,6 +661,14 @@ class ActionOpen(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        name = tracker.get_slot("name")
+
+        current_room = tracker.get_slot("current_room")
+        if current_room:
+            if current_room != "hosna_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
 
         open_item = tracker.get_slot("open_item")
 
@@ -606,6 +693,14 @@ class ActionGiveItem(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        name = tracker.get_slot("name")
+
+        current_room = tracker.get_slot("current_room")
+        if current_room:
+            if current_room != "hosna_room":
+                dispatcher.utter_message(f"Please focus {name}!")
+                return[]
+
         give_item = tracker.get_slot("give_item")
 
         if give_item:
@@ -614,7 +709,7 @@ class ActionGiveItem(Action):
                 dispatcher.utter_message("The first word for the secret key is 'YOU'")
                 dispatcher.utter_message("Heyyyy you are out of her nightmare but you woke up and you find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
                 dispatcher.utter_message(f"What do you do??")
-                return [SlotSet("current_room", "Tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
+                return [SlotSet("current_room", "tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
 
             else:
                 dispatcher.utter_message(f"Sorry try again!")
