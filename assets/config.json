@@ -5,7 +5,7 @@
     "send_button_caption": "Send",
     "user_name": "You",
     "id": "your_personal_nightmare",
-    "background-image": "Futurama.jpg",
+    "background-image": "cave.jpg",
     "api_url": "http://localhost:5005",
     "welcome-message": "Welcome to 'nightmare' room! please let me know what should I call you?"
 }
