@@ -441,6 +441,15 @@ nlu:
     - look at the [wall](looked_item)
     - look under the [table](looked_item)
     - look behind the [board](looked_item)
+    - look [around](looked_item)
+    - check the [chair](looked_item)
+    - inspect the [captain](looked_item)
+    - examine [communication](looked_item)
+    - take a closer look to the [console](looked_item)
+    - go examine the [airlock](looked_item)
+    - check [door](looked_item)
+    - check the [wires](looked_item)
+    - inspect [screen](looked_item)
 
 # - intent: switch_room
 #   examples: |
@@ -452,31 +461,30 @@ nlu:
 
 - intent: activate
   examples: |
-    - activate protocols
-    - activate emergency
-    - activate emergency protocols
-    - please activate the emergency protocols
-    - activation protocols
+    - activate power
+    - turn on power
+    - start power engine
+    - run power 
 
-- intent: give_planet_answer
-  examples: |
-    - [Mercury](planet_answer)
-    - [Venus](planet_answer)
-    - [Earth](planet_answer)
-    - [Mars](planet_answer)
-    - [Jupiter](planet_answer)
-    - [Saturn](planet_answer)
-    - [Uranus](planet_answer)
-    - [Neptune](planet_answer)
-    - [Pluto](planet_answer)
-    - The planet [Mercury](planet_answer)
-    - is it [Venus](planet_answer)?
-    - I believe it is the planet [Earth](planet_answer)
-    - the answer is [Mars](planet_answer)
-    - planet [Jupiter](planet_answer)
-    - celestial plenet [Saturn](planet_answer)
-    - [moon](planet_answer)
-    - the [moon](planet_answer)
+# - intent: give_planet_answer
+#   examples: |
+#     - [Mercury](planet_answer)
+#     - [Venus](planet_answer)
+#     - [Earth](planet_answer)
+#     - [Mars](planet_answer)
+#     - [Jupiter](planet_answer)
+#     - [Saturn](planet_answer)
+#     - [Uranus](planet_answer)
+#     - [Neptune](planet_answer)
+#     - [Pluto](planet_answer)
+#     - The planet [Mercury](planet_answer)
+#     - is it [Venus](planet_answer)?
+#     - I believe it is the planet [Earth](planet_answer)
+#     - the answer is [Mars](planet_answer)
+#     - planet [Jupiter](planet_answer)
+#     - celestial plenet [Saturn](planet_answer)
+#     - [moon](planet_answer)
+#     - the [moon](planet_answer)
 
 
 - intent: play_activity
@@ -490,23 +498,36 @@ nlu:
     - playing [guitar](play_action)
     - playing [videogames](play_action)
 
-- intent: open
+- intent: use
   examples: |
-    - open the [box](open_item)
-    - open the [door](open_item)
-    - open the [lock](open_item)
-    - open [windows](open_item)
-    - open the [car](open_item)
-    - open the [case](open_item)
+    - use [red cable a1](used_item)
+    - connect the [red cable a1](used_item)
+    - reconnect [red cable a1](used_item)
+    - use the [green cable a2](used_item)
+    - connect the [green cable a2](used_item)
+    - reconnect [green cable a2](used_item)
+    - use the [blue cable a3](used_item)
+    - connect the [blue cable a3](used_item)
+    - reconnect [blue cable a3](used_item)
 
-- intent: give_object
-  examples: |
-    - give the [fish](give_item) to the bear
-    - give the [fishes](give_item)
-    - give him the [keys](give_item)
-    - handle him the [book](give_item)
-    - hand over her the [doll](give_item)
-    - give the [pictures](give_item)
+
+# - intent: open
+#   examples: |
+#     - open the [box](open_item)
+#     - open the [door](open_item)
+#     - open the [lock](open_item)
+#     - open [windows](open_item)
+#     - open the [car](open_item)
+#     - open the [case](open_item)
+
+# - intent: give_object
+#   examples: |
+#     - give the [fish](give_item) to the bear
+#     - give the [fishes](give_item)
+#     - give him the [keys](give_item)
+#     - handle him the [book](give_item)
+#     - hand over her the [doll](give_item)
+#     - give the [pictures](give_item)
 
 
 

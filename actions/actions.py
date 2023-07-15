@@ -22,13 +22,16 @@ puzzle_hints = {
     "north_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
     "south_puzzle": ["There is something common in this part and the picture on the laptop", "you can figure it out from the answer of the previous puzzle!"],
     "chess_puzzle": ["Pay attention to the activities of other people! They may need another one to accomplish their job!!", "Maybe he is involved with another one!", "There is a Person who cannot do their job without another person."],
-    "oxygen_puzzle":["You are currently in a Spaceship during an emergency, ALSO OXYGEN IS VERY IMPORTANT", "It is an item that astronauts have to use when they go out to work", "The Item name start with the letter 'S'"],
-    "activate_puzzle": ["Activating Emergency protocols is usually from the cockpit computer, you must activate them ASAP", "Make sure to ACTIVATE the protocols!"],
-    "planet_puzzle": ["It is the hottest planet in our solar system", "It is named after a roman goddes, whose functions encompass love, beauty, desire", "The name start with the letter 'V'"],
-    "moon_puzzle": ["The natural satellite that orbits Earth", "It is white and fairytales say it is made out of cheese", "It starts with the letter 'M'"],
-    "open_puzzle":["Try opening the box"],
-    "fish_puzzle":["Try giving the fish"],
-    "direction_puzzle": ["I suggest you to choose a direction to go!"]
+    # "oxygen_puzzle":["You are currently in a Spaceship during an emergency, ALSO OXYGEN IS VERY IMPORTANT", "It is an item that astronauts have to use when they go out to work", "The Item name start with the letter 'S'"],
+    # "activate_puzzle": ["Activating Emergency protocols is usually from the cockpit computer, you must activate them ASAP", "Make sure to ACTIVATE the protocols!"],
+    "activate_puzzle": ["The spaceship's power is down. You see an emergency power switch on the wall and it is OFF", "Try to activate the power!"],
+    # "planet_puzzle": ["It is the hottest planet in our solar system", "It is named after a roman goddes, whose functions encompass love, beauty, desire", "The name start with the letter 'V'"],
+    # "moon_puzzle": ["The natural satellite that orbits Earth", "It is white and fairytales say it is made out of cheese", "It starts with the letter 'M'"],
+    # "open_puzzle":["Try opening the box"],
+    # "fish_puzzle":["Try giving the fish"],
+    "direction_puzzle": ["I suggest you to choose a direction to go!"],
+    "wires_puzzle": ["Try taking a closer look to the navigation screen", "Maybe there is someting wrong with the wires", "Try minimizing the current to avoid overload"],
+    "signal_puzzle": ["Try taking a closer look to the navigation console", "Press the left and right buttons to improve the amplifier signal", "The strongest signal is related to the current time"]
 }
 
 class ActionSayName(Action):
@@ -344,16 +347,16 @@ class GetHints(Action):
             return[SlotSet("chess_puzzle_hint_count", current_hint_attempt + 1)]
 
 
-        if current_puzzle == "oxygen_puzzle":
-            current_hint_attempt = tracker.get_slot("oxygen_puzzle_hint_count")
-            if current_hint_attempt is None:
-                current_hint_attempt = 0
+        # if current_puzzle == "oxygen_puzzle":
+        #     current_hint_attempt = tracker.get_slot("oxygen_puzzle_hint_count")
+        #     if current_hint_attempt is None:
+        #         current_hint_attempt = 0
                 
-            if current_hint_attempt > 2:
-                current_hint_attempt = 2
+        #     if current_hint_attempt > 2:
+        #         current_hint_attempt = 2
 
-            dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
-            return[SlotSet("oxygen_puzzle_hint_count", current_hint_attempt + 1)]
+        #     dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+        #     return[SlotSet("oxygen_puzzle_hint_count", current_hint_attempt + 1)]
 
         if current_puzzle == "activate_puzzle":
             current_hint_attempt = tracker.get_slot("activate_puzzle_hint_count")
@@ -366,8 +369,8 @@ class GetHints(Action):
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
             return[SlotSet("activate_puzzle_hint_count", current_hint_attempt + 1)]
 
-        if current_puzzle == "planet_puzzle":
-            current_hint_attempt = tracker.get_slot("planet_puzzle_hint_count")
+        if current_puzzle == "wires_puzzle":
+            current_hint_attempt = tracker.get_slot("wires_puzzle_hint_count")
             if current_hint_attempt is None:
                 current_hint_attempt = 0
                 
@@ -375,10 +378,10 @@ class GetHints(Action):
                 current_hint_attempt = 2
 
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
-            return[SlotSet("planet_puzzle_hint_count", current_hint_attempt + 1)]
+            return[SlotSet("wires_puzzle_hint_count", current_hint_attempt + 1)]
 
-        if current_puzzle == "moon_puzzle":
-            current_hint_attempt = tracker.get_slot("moon_puzzle_hint_count")
+        if current_puzzle == "signal_puzzle":
+            current_hint_attempt = tracker.get_slot("signal_puzzle_hint_count")
             if current_hint_attempt is None:
                 current_hint_attempt = 0
                 
@@ -386,33 +389,57 @@ class GetHints(Action):
                 current_hint_attempt = 2
 
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
-            return[SlotSet("moon_puzzle_hint_count", current_hint_attempt + 1)]
+            return[SlotSet("signal_puzzle_hint_count", current_hint_attempt + 1)]
 
-        if current_puzzle == "open_puzzle":
-            current_hint_attempt = tracker.get_slot("open_puzzle_hint_count")
-            if current_hint_attempt is None:
-                current_hint_attempt = 0
+        # if current_puzzle == "planet_puzzle":
+        #     current_hint_attempt = tracker.get_slot("planet_puzzle_hint_count")
+        #     if current_hint_attempt is None:
+        #         current_hint_attempt = 0
                 
-            if current_hint_attempt > 0:
-                current_hint_attempt = 0
+        #     if current_hint_attempt > 2:
+        #         current_hint_attempt = 2
 
-            dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
-            return[SlotSet("open_puzzle_hint_count", current_hint_attempt + 1)]
+        #     dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+        #     return[SlotSet("planet_puzzle_hint_count", current_hint_attempt + 1)]
 
-        if current_puzzle == "fish_puzzle":
-            current_hint_attempt = tracker.get_slot("fish_puzzle_hint_count")
-            if current_hint_attempt is None:
-                current_hint_attempt = 0
+        # if current_puzzle == "moon_puzzle":
+        #     current_hint_attempt = tracker.get_slot("moon_puzzle_hint_count")
+        #     if current_hint_attempt is None:
+        #         current_hint_attempt = 0
                 
-            if current_hint_attempt > 0:
-                current_hint_attempt = 0
+        #     if current_hint_attempt > 2:
+        #         current_hint_attempt = 2
 
-            dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
-            return[SlotSet("fish_puzzle_hint_count", current_hint_attempt + 1)]
+        #     dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+        #     return[SlotSet("moon_puzzle_hint_count", current_hint_attempt + 1)]
+
+        # if current_puzzle == "open_puzzle":
+        #     current_hint_attempt = tracker.get_slot("open_puzzle_hint_count")
+        #     if current_hint_attempt is None:
+        #         current_hint_attempt = 0
+                
+        #     if current_hint_attempt > 0:
+        #         current_hint_attempt = 0
+
+        #     dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+        #     return[SlotSet("open_puzzle_hint_count", current_hint_attempt + 1)]
+
+        # if current_puzzle == "fish_puzzle":
+        #     current_hint_attempt = tracker.get_slot("fish_puzzle_hint_count")
+        #     if current_hint_attempt is None:
+        #         current_hint_attempt = 0
+                
+        #     if current_hint_attempt > 0:
+        #         current_hint_attempt = 0
+
+        #     dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
+        #     return[SlotSet("fish_puzzle_hint_count", current_hint_attempt + 1)]
 
         if current_puzzle == "direction_puzzle":
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][0]}")
             return[]
+
+        
 
 
 class ActionPickItem(Action):
@@ -427,19 +454,19 @@ class ActionPickItem(Action):
         # print(current_room)
         current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
 
-        if current_puzzle_to_be_solve: 
-            if picked_item:
-                if current_puzzle_to_be_solve == "oxygen_puzzle":
-                    if picked_item == "suit":
-                        dispatcher.utter_message("Yes! You put on the space suit and you take a deep breath.")
-                        return[SlotSet("current_puzzle_to_solve", "activate_puzzle")]
-                    else:
-                        current_lives = tracker.get_slot("lives")
-                        if current_lives:
-                            dispatcher.utter_message("You picked the wrong item!")
-                            dispatcher.utter_message(text=f"You have lost 1 life! You have {current_lives-1} lives left.")
-                            return[SlotSet("lives", current_lives-1)]
-                        return[]
+        # if current_puzzle_to_be_solve: 
+        #     if picked_item:
+        #         if current_puzzle_to_be_solve == "oxygen_puzzle":
+        #             if picked_item == "suit":
+        #                 dispatcher.utter_message("Yes! You put on the space suit and you take a deep breath.")
+        #                 return[SlotSet("current_puzzle_to_solve", "activate_puzzle")]
+        #             else:
+        #                 current_lives = tracker.get_slot("lives")
+        #                 if current_lives:
+        #                     dispatcher.utter_message("You picked the wrong item!")
+        #                     dispatcher.utter_message(text=f"You have lost 1 life! You have {current_lives-1} lives left.")
+        #                     return[SlotSet("lives", current_lives-1)]
+        #                 return[]
             # else:
             #     dispatcher.utter_message("You already have the suit on!!")
             #     return[]
@@ -453,7 +480,8 @@ class ActionPickItem(Action):
                 if current_lives:
                     if current_lives < 2:
                         dispatcher.utter_message(text=f"GAME OVER.")
-                        return []
+                        dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
+                        return[SlotSet("is_game_over", True)]
                     dispatcher.utter_message("You picked the wrong one!")
                     dispatcher.utter_message(text=f"You have lost 3 life! You have {current_lives-3} lives left.")
                     return [SlotSet("lives", current_lives-3)]
@@ -463,7 +491,7 @@ class ActionPickItem(Action):
                 dispatcher.utter_message("according to the first three equations, try to find the answer to the fourth one: \n21+10=31\n22+20=84\n23+30=159\n24+50=?")
                 return [SlotSet("current_puzzle_to_solve", "math_puzzle")]
             else:
-                dispatcher.utter_message(f"You just picked {picked_item}!")
+                dispatcher.utter_message(f"You can't pick the {picked_item}!")
         else:
             dispatcher.utter_message(f"No Item was picked")
 
@@ -488,8 +516,74 @@ class ActionLookItem(Action):
             if looked_item.lower() == "son":
                 dispatcher.utter_message("There is no son but there is a beautiful sunset in the north!")
                 return[]
+            if looked_item.lower() == "around":
+                current_room = tracker.get_slot("current_room")
+                if current_room == "tareq_room":
+                    dispatcher.utter_message("At the center of the room stands the captain's chair")
+                    dispatcher.utter_message("In front there is the navigation screen")
+                    dispatcher.utter_message("To your right, there is the airlock door leading to the escape pods.")
+                    dispatcher.utter_message("On your left there is the communication console.")
+                    return[]
+                if current_room == "hosna_room":
+                    dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+                    dispatcher.utter_message("On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+                    dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+                    dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
+                    return[]
+            if looked_item.lower().find("captain") != -1 or looked_item.lower().find("chair") != -1:
+                current_room = tracker.get_slot("current_room")
+                if current_room == "tareq_room":
+                    dispatcher.utter_message("The captain's chair is adorned with multiple controls. Nearby is a small compartment for storing essential items.")
+                    return[]
+                else:
+                    dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
+                    return[]
+
+            if looked_item.lower().find("navigation") != -1 or looked_item.lower().find("screen") != -1:
+                current_room = tracker.get_slot("current_room")
+                if current_room == "tareq_room":
+                    is_activate_solved = tracker.get_slot("is_activate_solved")
+                    if is_activate_solved:
+                        dispatcher.utter_message("The navigation screen displays a distorted star map. Some wires seem to be loose, indicating a possible malfunction.")
+                        return[]
+                    else:
+                        dispatcher.utter_message("The navigation screen is currently inactive as it seems to be experiencing a lack of energy required for its proper functioning.")
+                        return[]
+                else:
+                    dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
+                    return[]
+
+            if looked_item.lower().find("airlock") != -1 or looked_item.lower().find("door") != -1:
+                current_room = tracker.get_slot("current_room")
+                if current_room == "tareq_room":
+                    dispatcher.utter_message("There's a numerical keypad on the side, suggesting a security lock.")
+                    return[]
+                else:
+                    dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
+                    return[]
+
+            if looked_item.lower().find("communication") != -1 or looked_item.lower().find("console") != -1:
+                current_room = tracker.get_slot("current_room")
+                if current_room == "tareq_room":
+                    dispatcher.utter_message(f"The communication console features a large window, which shows the vast expanse of outer space. A satellite dish, crucial for sending a distress signal, can be seen through the window. Additionally, at the center of the console there is a LEFT and a RIGHT Button.")
+                    return[]
+                else:
+                    dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
+                    return[]
+
+            if looked_item.lower().find("wire") != -1:
+                current_room = tracker.get_slot("current_room")
+                if current_room == "tareq_room":
+                    dispatcher.utter_message(f"There are three different wires hanging loosely from the system. Each wire has a unique color and number assigned to it: a red wire labeled '1A' a green wire labeled '2A' and a blue wire labeled '3A'")
+                    dispatcher.utter_message(f"Near the wires, you find a single input port that seems to belong to one of the wires. It appears to have suffered from an overload, potentially causing the system to shut down.")
+                    dispatcher.utter_message(f"You might need to reconnect the wires correctly to restore the system's functionality and gain valuable information. But be careful, choosing the wrong cable can cost you your life and hinder your chances of escape!")
+                    return[]
+                else:
+                    dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
+                    return[]
+
             else:
-                dispatcher.utter_message(f"You are looking at the {looked_item}")
+                dispatcher.utter_message(f"You can't look at that")
         else:
             dispatcher.utter_message(f"There is nothing to look at")
         return []
@@ -535,87 +629,93 @@ class ActionActivatePuzzle(Action):
                 dispatcher.utter_message(f"Please focus {name}!")
                 return[]
 
-        is_puzzle_already_solved = tracker.get_slot("is_planet_puzzle_solved")
-        if is_puzzle_already_solved:
-            dispatcher.utter_message(text=f"You already activated emergency protocols")
-            return []
-
-        current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
-        if current_puzzle_to_be_solve:
-            if current_puzzle_to_be_solve == "activate_puzzle" or current_puzzle_to_be_solve == "planet_puzzle":
-                dispatcher.utter_message("In order to activate the emergency protocols you need to solve the following puzzle")
-                dispatcher.utter_message("What is the second planet from the Sun, often referred to as Earth's twin?")
-                return[SlotSet("current_puzzle_to_solve", "planet_puzzle")]
-
-
-        current_lives = tracker.get_slot("lives")
-        if current_lives:
-            dispatcher.utter_message("I'm sorry but you can't activate them until you are really ready with your equipment.")
-            dispatcher.utter_message(f"You lost precious time and so you lost one life too. You have {current_lives-1} lives left.")
-            return [SlotSet("lives", current_lives-1)]
-
-        return[]
-
-
-class ActionPlanetPuzzle(Action):
-
-    def __init__(self):
-        self.puzzle_name = "planet_puzzle"
-
-    def name(self) -> Text:
-        return "action_planet_puzzle"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         # is_puzzle_already_solved = tracker.get_slot("is_planet_puzzle_solved")
         # if is_puzzle_already_solved:
-        #     dispatcher.utter_message(text=f"You already solved the venus puzzle")
+        #     dispatcher.utter_message(text=f"You already activated emergency protocols")
         #     return []
 
-        name = tracker.get_slot("name")
-
-        current_room = tracker.get_slot("current_room")
-        if current_room:
-            if current_room != "tareq_room":
-                dispatcher.utter_message(f"Please focus {name}!")
-                return[]
-
-        planet_answer = tracker.get_slot("planet_answer")
+        # current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
+        # if current_puzzle_to_be_solve:
+        #     if current_puzzle_to_be_solve == "activate_puzzle" or current_puzzle_to_be_solve == "planet_puzzle":
+        #         dispatcher.utter_message("In order to activate the emergency protocols you need to solve the following puzzle")
+        #         dispatcher.utter_message("What is the second planet from the Sun, often referred to as Earth's twin?")
+        #         return[SlotSet("current_puzzle_to_solve", "planet_puzzle")]
 
         current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
-        
         if current_puzzle_to_be_solve:
-            if current_puzzle_to_be_solve == "planet_puzzle":
-                if planet_answer:
-                    if planet_answer.lower() == "venus":
-                        dispatcher.utter_message("That's correct!")
-                        dispatcher.utter_message("However, your best bet is to set a course for earth before you run out of energy and oxygen")
-                        dispatcher.utter_message("In order to set a course for earth you need to answer the following question: The celestial body where humans first landed in 1969")
-                        return[SlotSet("current_puzzle_to_solve", "moon_puzzle"), SlotSet("is_planet_puzzle_solved", True)]
-                    else:
-                        current_lives = tracker.get_slot("lives")
-                        if current_lives:
-                            dispatcher.utter_message("Sorry but that is the wrong answer")
-                            dispatcher.utter_message(f"You just lost time, energy and another life. You have {current_lives-1} lives left.")
-                            return [SlotSet("lives", current_lives-1)]
+            if current_puzzle_to_be_solve == "activate_puzzle":
+                dispatcher.utter_message("With the power back on, you notice the navigation screen is now operational.")
+                return[SlotSet("current_puzzle_to_solve", "wires_puzzle"), SlotSet("is_activate_solved", True)]
 
-            if current_puzzle_to_be_solve == "moon_puzzle":
-                if planet_answer:
-                    if planet_answer.lower() == "moon":
-                        dispatcher.utter_message("That's correct!")
-                        dispatcher.utter_message("You take a deep breath and exhale in relief knowing that you are on your way home, the door is unlocked and you go to the next room, your next keyword is 'ARE'")
-                        return[SlotSet("current_puzzle_to_solve", "till_puzzle"), SlotSet("current_room", "Till_room")]
-                    else:
-                        current_lives = tracker.get_slot("lives")
-                        if current_lives:
-                            dispatcher.utter_message("Sorry but that is wrong")
-                            dispatcher.utter_message(f"You just lost time, energy and another life. You have {current_lives-1} lives left.")
-                            return [SlotSet("lives", current_lives-1)]
 
-        dispatcher.utter_message("Sorry but you have to rephrase your message.")
+        # current_lives = tracker.get_slot("lives")
+        # if current_lives:
+        #     dispatcher.utter_message("I'm sorry but you can't activate them until you are really ready with your equipment.")
+        #     dispatcher.utter_message(f"You lost precious time and so you lost one life too. You have {current_lives-1} lives left.")
+        #     return [SlotSet("lives", current_lives-1)]
+
         return[]
+
+
+# class ActionPlanetPuzzle(Action):
+
+#     def __init__(self):
+#         self.puzzle_name = "planet_puzzle"
+
+#     def name(self) -> Text:
+#         return "action_planet_puzzle"
+
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+#         # is_puzzle_already_solved = tracker.get_slot("is_planet_puzzle_solved")
+#         # if is_puzzle_already_solved:
+#         #     dispatcher.utter_message(text=f"You already solved the venus puzzle")
+#         #     return []
+
+#         name = tracker.get_slot("name")
+
+#         current_room = tracker.get_slot("current_room")
+#         if current_room:
+#             if current_room != "tareq_room":
+#                 dispatcher.utter_message(f"Please focus {name}!")
+#                 return[]
+
+#         planet_answer = tracker.get_slot("planet_answer")
+
+#         current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
+        
+#         if current_puzzle_to_be_solve:
+#             if current_puzzle_to_be_solve == "planet_puzzle":
+#                 if planet_answer:
+#                     if planet_answer.lower() == "venus":
+#                         dispatcher.utter_message("That's correct!")
+#                         dispatcher.utter_message("However, your best bet is to set a course for earth before you run out of energy and oxygen")
+#                         dispatcher.utter_message("In order to set a course for earth you need to answer the following question: The celestial body where humans first landed in 1969")
+#                         return[SlotSet("current_puzzle_to_solve", "moon_puzzle"), SlotSet("is_planet_puzzle_solved", True)]
+#                     else:
+#                         current_lives = tracker.get_slot("lives")
+#                         if current_lives:
+#                             dispatcher.utter_message("Sorry but that is the wrong answer")
+#                             dispatcher.utter_message(f"You just lost time, energy and another life. You have {current_lives-1} lives left.")
+#                             return [SlotSet("lives", current_lives-1)]
+
+#             if current_puzzle_to_be_solve == "moon_puzzle":
+#                 if planet_answer:
+#                     if planet_answer.lower() == "moon":
+#                         dispatcher.utter_message("That's correct!")
+#                         dispatcher.utter_message("You take a deep breath and exhale in relief knowing that you are on your way home, the door is unlocked and you go to the next room, your next keyword is 'ARE'")
+#                         return[SlotSet("current_puzzle_to_solve", "till_puzzle"), SlotSet("current_room", "Till_room")]
+#                     else:
+#                         current_lives = tracker.get_slot("lives")
+#                         if current_lives:
+#                             dispatcher.utter_message("Sorry but that is wrong")
+#                             dispatcher.utter_message(f"You just lost time, energy and another life. You have {current_lives-1} lives left.")
+#                             return [SlotSet("lives", current_lives-1)]
+
+#         dispatcher.utter_message("Sorry but you have to rephrase your message.")
+#         return[]
 
 
 class ActionplayActivity(Action):
@@ -640,11 +740,11 @@ class ActionplayActivity(Action):
             if play_action.lower() == "chess":
                 dispatcher.utter_message("Awesome! The box is open with the first word of the final password: 'YOU' ")
                 dispatcher.utter_message("Congratulations! You have successfully completed the first room!")
-                dispatcher.utter_message("The fun does not stop here, you are out of her nightmare but you woke up and you find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
-                dispatcher.utter_message(f"What do you do??")
-                # dispatcher.utter_message("what do you want to do?")
-                # return[SlotSet("current_puzzle_to_solve", "open_puzzle")]
-                return [SlotSet("current_room", "tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
+                dispatcher.utter_message("You woke up again but now you are a member of an elite team of astronauts aboard the spaceship Galactic Starfire. During a mission to explore the far reaches of the galaxy, the ship gets ensnared in a mysterious space anomaly that causes critical malfunctions. Your task is to repair the ship and escape the anomaly before it's too late!")
+                dispatcher.utter_message("The room is filled with a soft humming sound, indicating that the ship's POWER is DOWN. Emergency lights cast an eerie glow over the control panels and various interactive elements around you. The atmosphere feels tense, and you realize that time is of the essence.")
+                dispatcher.utter_message(f"What do you want to do first?")
+
+                return [SlotSet("current_room", "tareq_room"), SlotSet("current_puzzle_to_solve", "activate_puzzle")]
 
 
             else:
@@ -654,65 +754,123 @@ class ActionplayActivity(Action):
         return []
 
 
-class ActionOpen(Action):
+# class ActionOpen(Action):
+#     def name(self) -> Text:
+#         return "action_open"
+
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+#         name = tracker.get_slot("name")
+
+#         current_room = tracker.get_slot("current_room")
+#         if current_room:
+#             if current_room != "hosna_room":
+#                 dispatcher.utter_message(f"Please focus {name}!")
+#                 return[]
+
+#         open_item = tracker.get_slot("open_item")
+
+#         if open_item:
+#             if open_item.lower() == "box":
+#                 dispatcher.utter_message("There are several fishes in the box, Maybe if you give them to him, he will move!")
+#                 dispatcher.utter_message("What do you want to do?")
+#                 return[SlotSet("current_puzzle_to_solve", "fish_puzzle")]
+
+#             else:
+#                 dispatcher.utter_message(f"Sorry try again!")
+#         else:
+#             dispatcher.utter_message(f"Sorry I did not get it. Please rephrase your message")
+#         return []
+
+
+# class ActionGiveItem(Action):
+#     def name(self) -> Text:
+#         return "action_give_item"
+
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+#         name = tracker.get_slot("name")
+
+#         current_room = tracker.get_slot("current_room")
+#         if current_room:
+#             if current_room != "hosna_room":
+#                 dispatcher.utter_message(f"Please focus {name}!")
+#                 return[]
+
+#         give_item = tracker.get_slot("give_item")
+
+#         if give_item:
+#             if give_item.lower() == "fish" or give_item.lower() == "fishes" :
+#                 dispatcher.utter_message("He moved, you are free now!")
+#                 dispatcher.utter_message("The first word for the secret key is 'YOU'")
+#                 dispatcher.utter_message("Heyyyy you are out of her nightmare but you woke up and you find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
+#                 dispatcher.utter_message(f"What do you do??")
+#                 return [SlotSet("current_room", "tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
+
+#             else:
+#                 dispatcher.utter_message(f"Sorry try again!")
+#         else:
+#             dispatcher.utter_message(f"Sorry I did not get it. Please rephrase your message")
+#         return []
+
+class ActionUseItem(Action):
     def name(self) -> Text:
-        return "action_open"
+        return "action_use_item"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        name = tracker.get_slot("name")
-
         current_room = tracker.get_slot("current_room")
         if current_room:
-            if current_room != "hosna_room":
+            if current_room != "tareq_room":
                 dispatcher.utter_message(f"Please focus {name}!")
                 return[]
 
-        open_item = tracker.get_slot("open_item")
+        used_item = tracker.get_slot("used_item")
+        current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
+        
+        
 
-        if open_item:
-            if open_item.lower() == "box":
-                dispatcher.utter_message("There are several fishes in the box, Maybe if you give them to him, he will move!")
-                dispatcher.utter_message("What do you want to do?")
-                return[SlotSet("current_puzzle_to_solve", "fish_puzzle")]
+        if used_item:
+            if current_puzzle_to_be_solve == "wires_puzzle":
+                if used_item.lower().find("red") != -1 or used_item.lower().find("a1") != -1:
+                    dispatcher.utter_message("That was the right one!")
+                    dispatcher.utter_message("The navigation system is now displaying the ship's current date and time: 16/08/2023 14:15")
+                    dispatcher.utter_message("That information could be useful later - keep exploring!")
+                    return [SlotSet("current_puzzle_to_solve", "signal_puzzle")]
+                elif used_item.lower().find("green") != -1 or used_item.lower().find("a2") != -1:
+                    current_lives = tracker.get_slot("lives")
+                    if current_lives:
+                        dispatcher.utter_message(text=f"You have received a strong electrical charge and lost a life. You have {current_lives-1} lives left.")
+                        dispatcher.utter_message(text=f"Try maybe with another one")
+                        if current_lives-1 <= 0:
+                            dispatcher.utter_message(text=f"GAME OVER")
+                            dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
+                            return[SlotSet("is_game_over", True)]
+                        return[SlotSet("lives", current_lives-1)]
+                elif used_item.lower().find("blue") != -1 or used_item.lower().find("a3") != -1:
+                    current_lives = tracker.get_slot("lives")
+                    if current_lives:
+                        dispatcher.utter_message(text=f"You have received a strong electrical charge and lost a life. You have {current_lives-1} lives left.")
+                        dispatcher.utter_message(text=f"Try maybe with another one")
+                        if current_lives-1 <= 0:
+                            dispatcher.utter_message(text=f"GAME OVER")
+                            dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
+                            return[SlotSet("is_game_over", True)]
+                        return[SlotSet("lives", current_lives-1)]
 
-            else:
-                dispatcher.utter_message(f"Sorry try again!")
-        else:
-            dispatcher.utter_message(f"Sorry I did not get it. Please rephrase your message")
-        return []
-
-
-class ActionGiveItem(Action):
-    def name(self) -> Text:
-        return "action_give_item"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        name = tracker.get_slot("name")
-
-        current_room = tracker.get_slot("current_room")
-        if current_room:
-            if current_room != "hosna_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                else:
+                    dispatcher.utter_message(f"Sorry try again!")
+            elif current_puzzle_to_be_solve == "signal_puzzle":
                 return[]
-
-        give_item = tracker.get_slot("give_item")
-
-        if give_item:
-            if give_item.lower() == "fish" or give_item.lower() == "fishes" :
-                dispatcher.utter_message("He moved, you are free now!")
-                dispatcher.utter_message("The first word for the secret key is 'YOU'")
-                dispatcher.utter_message("Heyyyy you are out of her nightmare but you woke up and you find yourself in a Space ship during an emergency, Between the flashing lights you can notice the Oxygen levels decreasing rapidly, Everything is floating without control and you also remember to activate the emergency protocols to get the Ship under control.")
-                dispatcher.utter_message(f"What do you do??")
-                return [SlotSet("current_room", "tareq_room"), SlotSet("current_puzzle_to_solve", "oxygen_puzzle")]
-
             else:
-                dispatcher.utter_message(f"Sorry try again!")
+                dispatcher.utter_message(f"Sorry you can't use {used_item}!")
+                return[]
         else:
             dispatcher.utter_message(f"Sorry I did not get it. Please rephrase your message")
         return []

@@ -130,14 +130,14 @@ stories:
         - son_answer: son
   - action: action_son_puzzle
 
-- story: planet puzzle
-  steps:
-  - intent: give_planet_answer
-    entities:
-        - planet_answer: venus
-        - slot_was_set:
-        - planet_answer: venus
-  - action: action_planet_puzzle
+# - story: planet puzzle
+#   steps:
+#   - intent: give_planet_answer
+#     entities:
+#         - planet_answer: venus
+#         - slot_was_set:
+#         - planet_answer: venus
+#   - action: action_planet_puzzle
 
 
 # - story: set current room
@@ -149,7 +149,7 @@ stories:
 #         - current_room: Tareq
 #   - action: action_set_room
 
-- story: activate protocols
+- story: tareq room
   steps:
   - intent: activate
   - action: action_activate_puzzle
@@ -163,21 +163,30 @@ stories:
         - play_action: chess
   - action: action_play_activity
 
-- story: open
+- story: use item
   steps:
-  - intent: open
+  - intent: use
     entities:
-        - open_item: box
+        - used_item: red
         - slot_was_set:
-        - open_item: box
-  - action: action_open
+        - used_item: red
+  - action: action_use_item
+
+# - story: open
+#   steps:
+#   - intent: open
+#     entities:
+#         - open_item: box
+#         - slot_was_set:
+#         - open_item: box
+#   - action: action_open
 
 
-- story: give object
-  steps:
-  - intent: give_object
-    entities:
-        - give_item: fish
-        - slot_was_set:
-        - give_item: fish
-  - action: action_give_item
+# - story: give object
+#   steps:
+#   - intent: give_object
+#     entities:
+#         - give_item: fish
+#         - slot_was_set:
+#         - give_item: fish
+#   - action: action_give_item
