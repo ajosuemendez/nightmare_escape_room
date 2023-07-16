@@ -4,7 +4,6 @@ session_config:
   carry_over_slots_to_new_session: true
 
 intents:
-# - start
 - random_data
 - affirmation
 - user_give_name
@@ -16,13 +15,10 @@ intents:
 - give_son_answer
 - give_math_answer
 - look_at
-# - switch_room
 - activate
-# - give_planet_answer
 - play_activity
-# - open
-# - give_object
 - use
+- send
 
 
 entities:
@@ -54,15 +50,9 @@ entities:
 - wires_puzzle_hint_count
 - signal_puzzle_hint_count
 - used_item
-# - oxygen_puzzle_hint_count
-# - planet_puzzle_hint_count
-# - moon_puzzle_hint_count
-# - open_puzzle_hint_count
-# - fish_puzzle_hint_count
-# - is_planet_puzzle_solved
-# - planet_answer
-# - open_item
-# - give_item
+- signal_position
+- is_easter_egg_solved
+- is_wires_puzzle_solved
 
 slots:
   name:
@@ -142,47 +132,12 @@ slots:
     - type: from_entity
       entity: signal_puzzle_hint_count
 
-  # oxygen_puzzle_hint_count:
-  #   type: float
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: oxygen_puzzle_hint_count
-
   activate_puzzle_hint_count:
     type: float
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: activate_puzzle_hint_count
-
-  # planet_puzzle_hint_count:
-  #   type: float
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: planet_puzzle_hint_count
-
-  # moon_puzzle_hint_count:
-  #   type: float
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: moon_puzzle_hint_count
-
-  # open_puzzle_hint_count:
-  #   type: float
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: open_puzzle_hint_count
-
-  # fish_puzzle_hint_count:
-  #   type: float
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: fish_puzzle_hint_count
 
   picked_item:
     type: text
@@ -225,13 +180,13 @@ slots:
     mappings:
     - type: from_entity
       entity: used_item
-  
-  # planet_answer:
-  #   type: text
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: planet_answer
+
+  signal_position:
+    type: float
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: signal_position
   
   is_son_puzzle_solved:
     type: bool
@@ -273,13 +228,21 @@ slots:
     - type: from_entity
       entity: is_game_over
 
-  # is_planet_puzzle_solved:
-  #   type: bool
-  #   initial_value: false
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: is_planet_puzzle_solved
+  is_easter_egg_solved:
+    type: bool
+    initial_value: false
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: is_easter_egg_solved
+
+  is_wires_puzzle_solved:
+    type: bool
+    initial_value: false
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: is_wires_puzzle_solved
 
   current_room:
     type: text
@@ -294,20 +257,6 @@ slots:
     mappings:
     - type: from_entity
       entity: play_action
-
-  # open_item:
-  #   type: text
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: open_item
-
-  # give_item:
-  #   type: text
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: give_item
 
 responses:
   utter_random_thing:
@@ -328,11 +277,7 @@ actions:
 - action_son_puzzle
 - action_math_puzzle
 - action_look_at
-# - action_set_room
 - action_activate_puzzle
-# - action_planet_puzzle
-# - action_moon_puzzle
 - action_play_activity
-# - action_open
-# - action_give_item
 - action_use_item
+- action_send_signal
