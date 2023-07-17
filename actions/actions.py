@@ -86,16 +86,16 @@ class ActionAffirmStartGame(Action):
 
         if intent == "affirm_to_play":
             dispatcher.utter_message("You woke up in the center of the room!")
-            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
-            dispatcher.utter_message("On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
-            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
+            dispatcher.utter_message("On the east you see a table with some objects on it.")
+            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you!")
             dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
             dispatcher.utter_message("Which direction do you want to go?")
         elif intent == "deny_to_play":
             dispatcher.utter_message("I was just being nice! You have no choice! Play or die!")
-            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
-            dispatcher.utter_message("On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
-            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
+            dispatcher.utter_message("On the east you see a table with some objects on it.")
+            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you!")
             dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
             dispatcher.utter_message("Which direction do you want to go?")
         else:
@@ -511,9 +511,9 @@ class ActionLookItem(Action):
                     dispatcher.utter_message("On your left there is the communication console.")
                     return[]
                 if current_room == "hosna_room":
-                    dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
-                    dispatcher.utter_message("On the east you see a table with some objects on it. On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
-                    dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you! On the west you see aboard with some lines written on it and also a broken chair")
+                    dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
+                    dispatcher.utter_message("On the east you see a table with some objects on it.")
+                    dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you!")
                     dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
                     return[]
             if looked_item.lower().find("captain") != -1 or looked_item.lower().find("chair") != -1:
