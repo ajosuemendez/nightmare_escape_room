@@ -9,7 +9,7 @@ puzzle_hints = {
     "math_puzzle": ["There is a relation between the actual sum of the numbers and the ones which have been assumed!", "It is easier than you think! The multiplication grows sequentially!", "It is a 3 digit numbers and it start with a 2"],
     "east_puzzle": ["I suggest to look around", "look for something related to the answer to the previous puzzle in another direction!"],
     "north_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
-    "south_puzzle": ["There is something common in this part and the picture on the laptop", "you can figure it out from the answer of the previous puzzle!"],
+    # "south_puzzle": ["There is something common in this part and the picture on the laptop", "you can figure it out from the answer of the previous puzzle!"],
     "chess_puzzle": ["Pay attention to the activities of other people! They may need another one to accomplish their job!!", "Maybe he is involved with another one!", "There is a Person who cannot do their job without another person."],
     "activate_puzzle": ["The spaceship's power is down. You see an emergency power switch on the wall and it is OFF", "Try to activate the power!"],
     "direction_puzzle": ["I suggest you to choose a direction to go!"],
@@ -88,15 +88,15 @@ class ActionAffirmStartGame(Action):
             dispatcher.utter_message("You woke up in the center of the room!")
             dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
             dispatcher.utter_message("On the east you see a table with some objects on it.")
-            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you!")
-            dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the south there is door which seems to be the exit door!")
+            dispatcher.utter_message("On the west you see a board with some lines written on it and also a broken chair")
             dispatcher.utter_message("Which direction do you want to go?")
         elif intent == "deny_to_play":
             dispatcher.utter_message("I was just being nice! You have no choice! Play or die!")
             dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
             dispatcher.utter_message("On the east you see a table with some objects on it.")
-            dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you!")
-            dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
+            dispatcher.utter_message("On the south there is door which seems to be the exit door!")
+            dispatcher.utter_message("On the west you see a board with some lines written on it and also a broken chair")
             dispatcher.utter_message("Which direction do you want to go?")
         else:
             dispatcher.utter_message("I'm sorry, I didn't understand. Can you please clarify?")
@@ -141,6 +141,12 @@ class ActionGiveDirection(Action):
                 return [SlotSet("current_puzzle_to_solve", "son_puzzle")]
 
             if direction == "east":
+                son_puzzle_solved = tracker.get_slot("is_son_puzzle_solved")
+
+                if not son_puzzle_solved:
+                    dispatcher.utter_message(text=f"You can't go there yet. You have to explore other directions first!")
+                    return[]
+
                 is_puzzle_already_solved = tracker.get_slot("is_math_puzzle_solved")
                 if is_puzzle_already_solved:
                     dispatcher.utter_message(text=f"You have already solved this puzzle, look around any other part of the room")
@@ -148,12 +154,21 @@ class ActionGiveDirection(Action):
                 dispatcher.utter_message("There are two laptops on the table. You are able to select one of them. Be careful! If you choose the wrong one you will lose three lives! One of them works with IOS operating system and the other one with windows! Which one do you want?")
                 return [SlotSet("current_puzzle_to_solve", "east_puzzle")]
             if direction == "north":
-                dispatcher.utter_message("You are enjoying a beautiful sunset from the window or maybe windows.")
+                dispatcher.utter_message("You are enjoying a beautiful sunset from the window or maybe windows. Remeber this for the east puzzle!")
                 return [SlotSet("current_puzzle_to_solve", "north_puzzle")]
             if direction == "south":
-                dispatcher.utter_message("The bear next to the door seems to be a doll but it is not!! It has a tiny little red hat with a flower on it! His hand is in his pocket which has a picture of a fish on it!")
-                dispatcher.utter_message("What do you want to do?")
-                return [SlotSet("current_puzzle_to_solve", "south_puzzle")]
+                # dispatcher.utter_message("The bear next to the door seems to be a doll but it is not!! It has a tiny little red hat with a flower on it! His hand is in his pocket which has a picture of a fish on it!")
+                # dispatcher.utter_message("What do you want to do?")
+
+                last_two_puzzles_solved = tracker.get_slot("is_son_puzzle_solved") and tracker.get_slot("is_math_puzzle_solved")
+
+                if not last_two_puzzles_solved:
+                    dispatcher.utter_message("Sorry, you can't go to the south yet. Explore other directions first!")
+                    return []
+
+                dispatcher.utter_message("There is a safe box. Solve the following puzzle to open it and get the key for the exit door!")
+                dispatcher.utter_message("There are 4 people in a room, Sam is reading, Mahsa is watching TV, Rayan is playing chess, what Sepehr is doing?")
+                return [SlotSet("current_puzzle_to_solve", "chess_puzzle")]
         else:
             dispatcher.utter_message("Sorry try again!")
         return []
@@ -261,8 +276,8 @@ class ActionMathPuzzle(Action):
             if math_answer.lower() == "two hundred ninety six" or math_answer == "296":
                 
                 dispatcher.utter_message(text=f"Right! You are doing well!")
-                dispatcher.utter_message(text=f"You see a polar bear on the desktop, It is so cute with a pocket full of fish! (Weird!!! Why a bear should have a pocket????)")
-                dispatcher.utter_message(text=f"Where do you wanna go now?")
+                dispatcher.utter_message(text=f"You see a picture of a safe box. Look around to find the misterious safe box!")
+                dispatcher.utter_message(text=f"Where do you want to explore now?")
                 return[SlotSet("is_math_puzzle_solved", True)]
                 # return[]
 
@@ -483,15 +498,15 @@ class ActionLookItem(Action):
         looked_item = tracker.get_slot("looked_item")
 
         if looked_item:
-            if looked_item == "pocket":
-                current_room = tracker.get_slot("current_room")
-                if current_room == "hosna_room":
-                    dispatcher.utter_message("You found the last puzzle in his pocket")
-                    dispatcher.utter_message("There are 4 people in a room, Sam is reading, Mahsa is watching TV, Rayan is playing chess, what Sepehr is doing?")
-                    return[SlotSet("current_puzzle_to_solve", "chess_puzzle")]
-                else:
-                    dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
-                    return[]
+            # if looked_item == "pocket":
+            #     current_room = tracker.get_slot("current_room")
+            #     if current_room == "hosna_room":
+            #         dispatcher.utter_message("You found the last puzzle in his pocket")
+            #         dispatcher.utter_message("There are 4 people in a room, Sam is reading, Mahsa is watching TV, Rayan is playing chess, what Sepehr is doing?")
+            #         return[SlotSet("current_puzzle_to_solve", "chess_puzzle")]
+            #     else:
+            #         dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
+            #         return[]
 
             if looked_item.lower() == "son":
                 current_room = tracker.get_slot("current_room")
@@ -507,19 +522,19 @@ class ActionLookItem(Action):
                 if current_room == "tareq_room":
                     dispatcher.utter_message("At the center of the room stands the captain's chair")
                     dispatcher.utter_message("In front there is the navigation screen")
-                    dispatcher.utter_message("To your right, there is the airlock door leading to the escape pods.")
-                    dispatcher.utter_message("On your left there is the communication console.")
+                    dispatcher.utter_message("There is also an airlock door leading to the escape pods")
+                    dispatcher.utter_message("Next to the captain's chair is the communications console")
                     return[]
                 if current_room == "hosna_room":
                     dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
                     dispatcher.utter_message("On the east you see a table with some objects on it.")
-                    dispatcher.utter_message("On the south there is door which seems to be the exit door! But a polar bear is sitting next to it and staring at you!")
-                    dispatcher.utter_message("On the west you see aboard with some lines written on it and also a broken chair")
+                    dispatcher.utter_message("On the south there is door which seems to be the exit door!")
+                    dispatcher.utter_message("On the west you see a board with some lines written on it and also a broken chair")
                     return[]
             if looked_item.lower().find("captain") != -1 or looked_item.lower().find("chair") != -1:
                 current_room = tracker.get_slot("current_room")
                 if current_room == "tareq_room":
-                    dispatcher.utter_message("The captain's chair is adorned with multiple controls. Nearby is a small compartment for storing essential items.")
+                    dispatcher.utter_message("The captain's chair is adorned with multiple controls. Nearby is compartment for storing essential items.")
                     return[]
                 else:
                     dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
@@ -652,11 +667,18 @@ class ActionplayActivity(Action):
 
         if play_action:
             if play_action.lower() == "chess":
-                dispatcher.utter_message("Awesome! The box is open and you found the numbers: 39104")
+                dispatcher.utter_message("Yes! You opened the box and you got the key with the serial number 39104.")
                 dispatcher.utter_message("Congratulations! You have successfully completed the first room!")
                 dispatcher.utter_message("You woke up again but now you are a member of an elite team of astronauts aboard the spaceship Galactic Starfire. During a mission to explore the far reaches of the galaxy, the ship gets ensnared in a mysterious space anomaly that causes critical malfunctions. Your task is to repair the ship and escape the anomaly before it's too late!")
-                dispatcher.utter_message("The room is filled with a soft humming sound, indicating that the ship's power is down. Emergency lights cast an eerie glow over the control panels and various interactive elements around you. The atmosphere feels tense, and you realize that time is of the essence.")
-                dispatcher.utter_message(f"Remember, you can always look AROUND to gather useful information.")
+                dispatcher.utter_message("The room is filled with a soft humming sound, indicating that the ship's power is down.")
+                dispatcher.utter_message("At the center of the room stands the captain's chair")
+                dispatcher.utter_message("In front there is the navigation screen")
+                dispatcher.utter_message("There is also an airlock door leading to the escape pods")
+                dispatcher.utter_message("Next to the captain's chair is the communications console")
+                
+                dispatcher.utter_message(f"You can always type 'look around' to gather useful information about your surroundings")
+
+
                 dispatcher.utter_message(f"What do you want to do first?")
                 return [SlotSet("current_room", "tareq_room"), SlotSet("current_puzzle_to_solve", "activate_puzzle")]
 
