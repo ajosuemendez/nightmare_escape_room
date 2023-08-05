@@ -5,16 +5,16 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 puzzle_hints = {
-    "son_puzzle": ["You can have it if you are married", "when they grow up they can become super annoying like Till", "It starts with S and ends with ON"],
-    "math_puzzle": ["There is a relation between the actual sum of the numbers and the ones which have been assumed!", "It is easier than you think! The multiplication grows sequentially!", "It is a 3 digit numbers and it start with a 2"],
-    "east_puzzle": ["I suggest to look around", "look for something related to the answer to the previous puzzle in another direction!"],
-    "north_puzzle": ["I suggest to look around", "you can figure it out from the answer of the previous puzzle!"],
+    "son_puzzle": ["You can have it if you are married (You have used 1/3 hints for the current puzzle)", "when they grow up they can become super annoying (You have used 2/3 hints for the current puzzle)", "It starts with S and ends with ON (You have used 3/3 hints for the current puzzle)"],
+    "math_puzzle": ["There is a relation between the actual sum of the numbers and the ones which have been assumed! (You have used 1/3 hints for the current puzzle)", "It is easier than you think! The multiplication grows sequentially! (You have used 2/3 hints for the current puzzle)", "It is a 3 digit numbers and it start with a 2. (You have used 3/3 hints for the current puzzle)"],
+    "east_puzzle": ["I suggest to look around (You have used 1/2 hints for the current puzzle)", "look for something related to the answer to the previous puzzle in another direction! (You have used 2/2 hints for the current puzzle)"],
+    "north_puzzle": ["I suggest to look around (You have used 1/2 hints for the current puzzle)", "you can figure it out from the answer of the previous puzzle! (You have used 2/2 hints for the current puzzle)"],
     # "south_puzzle": ["There is something common in this part and the picture on the laptop", "you can figure it out from the answer of the previous puzzle!"],
-    "chess_puzzle": ["Pay attention to the activities of other people! They may need another one to accomplish their job!!", "Maybe he is involved with another one!", "There is a Person who cannot do their job without another person."],
-    "activate_puzzle": ["The spaceship's power is down. You see an emergency power switch on the wall and it is OFF", "Try to activate the power!"],
-    "direction_puzzle": ["I suggest you to choose a direction to go!"],
-    "wires_puzzle": ["Try taking a closer look to the navigation screen", "Maybe there is someting wrong with the wires", "Try minimizing the current to avoid overload"],
-    "signal_puzzle": ["Try taking a closer look to the navigation console", "Press the left and right buttons to improve the amplifier signal", "The strongest signal is related to the current time"]
+    "chess_puzzle": ["Pay attention to the activities of other people! They may need another one to accomplish their job! (You have used 1/3 hints for the current puzzle)", "Maybe he is involved with another one! (You have used 2/3 hints for the current puzzle)", "There is a Person who cannot do their job/activity without another person (You have used 3/3 hints for the current puzzle)"],
+    "activate_puzzle": ["The spaceship's power is down. Look around to find more clues. (You have used 1/3 hints for the current puzzle)", "Take a closer look at the captain's chair (You have used 2/3 hints for the current puzzle)", "Try to turn on the power switch! (You have used 3/3 hints for the current puzzle)"],
+    "direction_puzzle": ["I suggest you to choose a direction to go! (You have used 1/1 hints for the current puzzle)"],
+    "wires_puzzle": ["Try taking a closer look to the navigation screen (You have used 1/3 hints for the current puzzle)", "Maybe there is someting wrong with the wires (You have used 2/3 hints for the current puzzle)", "Check the wires and if you haved already done that then try reconnecting one of the cables with the smallest current! (You have used 3/3 hints for the current puzzle)"],
+    "signal_puzzle": ["Try taking a closer look to the navigation console (You have used 1/3 hints for the current puzzle)", "Press the left and right buttons to improve the amplifier signal (You have used 2/3 hints for the current puzzle)", "The strongest signal is related to the current time (You have used 3/3 hints for the current puzzle)"]
 }
 
 class ActionSayName(Action):
@@ -40,7 +40,7 @@ class ActionSayName(Action):
 
         if current_room:
             if current_room != "hosna_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                dispatcher.utter_message(f"Hey, please focus on the game!")
                 return[]
         else:
             if tracker.get_slot("current_puzzle_to_solve") is None:
@@ -49,7 +49,7 @@ class ActionSayName(Action):
                 dispatcher.utter_message(text="You can always ask for help anytime!")
                 dispatcher.utter_message(text="Are you ready to start?")
 
-                return [SlotSet("name", name), SlotSet("current_puzzle_to_solve", "direction_puzzle"), SlotSet("lives", 10), SlotSet("current_room", "hosna_room"), SlotSet("signal_position", 5)]
+                return [SlotSet("name", name), SlotSet("current_puzzle_to_solve", "direction_puzzle"), SlotSet("lives", 5), SlotSet("current_room", "hosna_room"), SlotSet("signal_position", 5)]
             else:
                 dispatcher.utter_message(text=f"Sorry I don't understand. Can you rephrase it?")
                 return []
@@ -72,7 +72,7 @@ class ActionAffirmStartGame(Action):
         if is_already_started:
             name = tracker.get_slot("name")
             if name:
-                dispatcher.utter_message(f"Hey Focus on the game {name}!")
+                dispatcher.utter_message(f"Hey Focus on the game!")
                 return[]
             dispatcher.utter_message("Hey Focus on the game!")
             return[]
@@ -126,7 +126,7 @@ class ActionGiveDirection(Action):
 
         if current_room:
             if current_room != "hosna_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                dispatcher.utter_message(f"Hey, please focus on the game!")
                 return[]
 
         if direction:
@@ -151,7 +151,7 @@ class ActionGiveDirection(Action):
                 if is_puzzle_already_solved:
                     dispatcher.utter_message(text=f"You have already solved this puzzle, look around any other part of the room")
                     return []
-                dispatcher.utter_message("There are two laptops on the table. You are able to select one of them. Be careful! If you choose the wrong one you will lose three lives! One of them works with IOS operating system and the other one with windows! Which one do you want?")
+                dispatcher.utter_message("There are two laptops on the table. You are able to select one of them. Be careful! If you choose the wrong one you will lose a life! One of them works with IOS operating system and the other one with windows! Which one do you want?")
                 return [SlotSet("current_puzzle_to_solve", "east_puzzle")]
             if direction == "north":
                 dispatcher.utter_message("You are enjoying a beautiful sunset from the window or maybe windows. Remeber this for the east puzzle!")
@@ -196,7 +196,7 @@ class ActionSonPuzzle(Action):
         current_room = tracker.get_slot("current_room")
         if current_room:
             if current_room != "hosna_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                dispatcher.utter_message(f"Hey, please focus on the game!")
                 return[]
 
 
@@ -399,8 +399,8 @@ class GetHints(Action):
             if current_hint_attempt is None:
                 current_hint_attempt = 0
                 
-            if current_hint_attempt > 1:
-                current_hint_attempt = 1
+            if current_hint_attempt > 2:
+                current_hint_attempt = 2
 
             dispatcher.utter_message(text=f"{puzzle_hints[current_puzzle][current_hint_attempt]}")
             return[SlotSet("activate_puzzle_hint_count", current_hint_attempt + 1)]
@@ -462,13 +462,13 @@ class ActionPickItem(Action):
             elif picked_item.find("ios") != -1:
                 current_lives = tracker.get_slot("lives")
                 if current_lives:
-                    if current_lives < 2:
+                    if current_lives - 1 < 1:
                         dispatcher.utter_message(text=f"GAME OVER.")
                         dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
                         return[SlotSet("is_game_over", True)]
                     dispatcher.utter_message("You picked the wrong one!")
-                    dispatcher.utter_message(text=f"You have lost 3 life! You have {current_lives-3} lives left.")
-                    return [SlotSet("lives", current_lives-3)]
+                    dispatcher.utter_message(text=f"You have lost 1 life! You have {current_lives-1} lives left.")
+                    return [SlotSet("lives", current_lives-1)]
 
             elif picked_item.lower().find("windows") != -1:
                 dispatcher.utter_message("You can see a puzzle on the screen saver, solve it to turn it on!")
@@ -520,10 +520,10 @@ class ActionLookItem(Action):
             if looked_item.lower() == "around" or looked_item.lower() == "surroundings" or looked_item.lower() == "surrounding":
                 current_room = tracker.get_slot("current_room")
                 if current_room == "tareq_room":
-                    dispatcher.utter_message("At the center of the room stands the captain's chair")
+                    dispatcher.utter_message("In the middle of the room stands the captain's chair")
                     dispatcher.utter_message("In front there is the navigation screen")
                     dispatcher.utter_message("There is also an airlock door leading to the escape pods")
-                    dispatcher.utter_message("Next to the captain's chair is the communications console")
+                    dispatcher.utter_message("Next to the captain's chair is the communication console")
                     return[]
                 if current_room == "hosna_room":
                     dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
@@ -534,7 +534,7 @@ class ActionLookItem(Action):
             if looked_item.lower().find("captain") != -1 or looked_item.lower().find("chair") != -1:
                 current_room = tracker.get_slot("current_room")
                 if current_room == "tareq_room":
-                    dispatcher.utter_message("The captain's chair is adorned with multiple controls. Nearby is compartment for storing essential items.")
+                    dispatcher.utter_message("The captain's chair is equipped with several controls and a power switch, which is currently turned OFF. Nearby is a compartment for storing essential items.")
                     return[]
                 else:
                     dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
@@ -570,7 +570,7 @@ class ActionLookItem(Action):
             if looked_item.lower().find("communication") != -1 or looked_item.lower().find("console") != -1:
                 current_room = tracker.get_slot("current_room")
                 if current_room == "tareq_room":
-                    dispatcher.utter_message(f"The communication console features a large window, which shows the vast expanse of outer space. A satellite dish, crucial for sending a distress signal, can be seen through the window. Additionally, at the center of the console there is a LEFT and a RIGHT Button.")
+                    dispatcher.utter_message(f"The communication console features a large window, which shows the vast expanse of outer space. A satellite dish, crucial for sending a distress signal, can be seen through the window. Additionally, on top of the console there is a LEFT and a RIGHT button to adjust the satellite position and a CENTER button to send the distress signal")
                     return[]
                 else:
                     dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
@@ -629,7 +629,7 @@ class ActionActivatePuzzle(Action):
         name = tracker.get_slot("name")
         if current_room:
             if current_room != "tareq_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                dispatcher.utter_message(f"Hey, please focus on the game!")
                 return[]
 
         current_puzzle_to_be_solve = tracker.get_slot("current_puzzle_to_solve")
@@ -660,7 +660,7 @@ class ActionplayActivity(Action):
         current_room = tracker.get_slot("current_room")
         if current_room:
             if current_room != "hosna_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                dispatcher.utter_message(f"Hey, please focus on the game!")
                 return[]
 
         play_action = tracker.get_slot("play_action")
@@ -671,10 +671,10 @@ class ActionplayActivity(Action):
                 dispatcher.utter_message("Congratulations! You have successfully completed the first room!")
                 dispatcher.utter_message("You woke up again but now you are a member of an elite team of astronauts aboard the spaceship Galactic Starfire. During a mission to explore the far reaches of the galaxy, the ship gets ensnared in a mysterious space anomaly that causes critical malfunctions. Your task is to repair the ship and escape the anomaly before it's too late!")
                 dispatcher.utter_message("The room is filled with a soft humming sound, indicating that the ship's power is down.")
-                dispatcher.utter_message("At the center of the room stands the captain's chair")
+                dispatcher.utter_message("In the middle of the room stands the captain's chair")
                 dispatcher.utter_message("In front there is the navigation screen")
                 dispatcher.utter_message("There is also an airlock door leading to the escape pods")
-                dispatcher.utter_message("Next to the captain's chair is the communications console")
+                dispatcher.utter_message("Next to the captain's chair is the communication console")
                 
                 dispatcher.utter_message(f"You can always type 'look around' to gather useful information about your surroundings")
 
@@ -704,10 +704,12 @@ class ActionUseItem(Action):
             dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
             return[]
 
+        name = tracker.get_slot("name")
+
         current_room = tracker.get_slot("current_room")
         if current_room:
             if current_room != "tareq_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                dispatcher.utter_message(f"Hey, please focus on the game!")
                 return[]
 
         used_item = tracker.get_slot("used_item")
@@ -724,9 +726,12 @@ class ActionUseItem(Action):
                 elif used_item.lower().find("right") != -1:
                     dispatcher.utter_message("You pressed the right button but nothing happened. Probably there is no energy to operate it")
                     return[]
+                elif used_item.lower().find("center") != -1:
+                    dispatcher.utter_message("You pressed the center button but nothing happened. Probably there is no energy to operate it")
+                    return[]
 
             if current_puzzle_to_be_solve == "wires_puzzle":
-                if used_item.lower().find("green") != -1 or used_item.lower().find("a2") != -1:
+                if used_item.lower().find("green") != -1 or used_item.lower().find("2a") != -1:
                     current_lives = tracker.get_slot("lives")
                     if current_lives:
                         dispatcher.utter_message(text=f"You have received a strong electrical charge and lost a life. You have {current_lives-1} lives left.")
@@ -736,7 +741,7 @@ class ActionUseItem(Action):
                             dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
                             return[SlotSet("is_game_over", True)]
                         return[SlotSet("lives", current_lives-1)]
-                elif used_item.lower().find("blue") != -1 or used_item.lower().find("a3") != -1:
+                elif used_item.lower().find("blue") != -1 or used_item.lower().find("3a") != -1:
                     current_lives = tracker.get_slot("lives")
                     if current_lives:
                         dispatcher.utter_message(text=f"You have received a strong electrical charge and lost a life. You have {current_lives-1} lives left.")
@@ -746,7 +751,7 @@ class ActionUseItem(Action):
                             dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
                             return[SlotSet("is_game_over", True)]
                         return[SlotSet("lives", current_lives-1)]
-                elif used_item.lower().find("red") != -1 or used_item.lower().find("a1") != -1:
+                elif used_item.lower().find("red") != -1 or used_item.lower().find("1a") != -1:
                     dispatcher.utter_message("That was the right one!")
                     dispatcher.utter_message("The navigation system is now displaying the ship's current date and time: 16/08/2023 14:08")
                     dispatcher.utter_message("That information could be useful later - keep exploring!")
@@ -757,25 +762,50 @@ class ActionUseItem(Action):
                     if signal_position <= 1:
                         signal_position = 1
                     dispatcher.utter_message(f"The the satellite dish was moved to the 14:0{signal_position} position.")
-                    dispatcher.utter_message("You can send a disress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
+                    dispatcher.utter_message("You can send a distress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
                     return[SlotSet("signal_position", signal_position)]
                 elif used_item.lower().find("right") != -1:
                     signal_position += 1 
                     if signal_position >= 9:
                         signal_position = 9
                     dispatcher.utter_message(f"The the satellite dish was moved to the 14:0{signal_position} position.")
-                    dispatcher.utter_message("You can send a disress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
+                    dispatcher.utter_message("You can send a distress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
                     return[SlotSet("signal_position", signal_position)]
 
+                elif used_item.lower().find("center") != -1:
+                    signal_position = tracker.get_slot("signal_position")
+                    is_activate_solved = tracker.get_slot("is_activate_solved")
+
+                    if not is_activate_solved:
+                        dispatcher.utter_message("You can't send anything at the moment")
+                        return[]
+        
+                    if signal_position:
+                        if signal_position == 8:
+                            dispatcher.utter_message("Congratulations, brave astronaut! You've successfully aligned the satellite dish and sent a powerful distress signal to the coordinates Latitude: 52.1352507 and Longitude: 11.6388062. Your message has been received, and rescue ships are en route to your location. Help is on the way!")
+                            dispatcher.utter_message("As you stand by the communication console, the anxiety and intensity of the mission begin to fade. A sense of surreal clarity washes over you, and you suddenly realize the truth – it was all a vivid dream. You take a deep breath, relieved to be safely back in the realm of reality. The control panels, the navigation screen, the airlock door – all dissolve into the fading echoes of the dream. You find yourself waking up in your own comfortable bed, surrounded by the familiar comforts of your home.")
+                            return[SlotSet("is_game_over", True)]
+                        else:
+                            current_lives = tracker.get_slot("lives")
+                            if current_lives:
+                                dispatcher.utter_message("Uh-oh, it seems there might have been a slight miscalculation. The distress signal you sent encountered interference and failed to reach its intended destination.")
+                                dispatcher.utter_message(f"You have lost precious time and a life. You have {current_lives-1} lives left.")
+                                if current_lives-1 <= 0:
+                                    dispatcher.utter_message(text=f"GAME OVER")
+                                    dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
+                                    return[SlotSet("is_game_over", True)]
+                                
+                                return[SlotSet("lives", current_lives-1)]
                 else:
                     dispatcher.utter_message(f"Sorry try again!")
+            
             elif current_puzzle_to_be_solve == "signal_puzzle":
                 if used_item.lower().find("left") != -1:
                     signal_position -= 1 
                     if signal_position <= 1:
                         signal_position = 1
                     dispatcher.utter_message(f"The the satellite dish was moved to the 14:0{signal_position} position.")
-                    dispatcher.utter_message("You can send a disress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
+                    dispatcher.utter_message("You can send a distress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
                     return[SlotSet("signal_position", signal_position)]
 
                 elif used_item.lower().find("right") != -1:
@@ -783,8 +813,35 @@ class ActionUseItem(Action):
                     if signal_position >= 9:
                         signal_position = 9
                     dispatcher.utter_message(f"The the satellite dish was moved to the 14:0{signal_position} position.")
-                    dispatcher.utter_message("You can send a disress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
+                    dispatcher.utter_message("You can send a distress signal but be careful cause there is not much energy left. Sending the wrong signal may come with risks!")
                     return[SlotSet("signal_position", signal_position)]
+
+                
+                elif used_item.lower().find("center") != -1:
+                    signal_position = tracker.get_slot("signal_position")
+                    is_activate_solved = tracker.get_slot("is_activate_solved")
+
+                    if not is_activate_solved:
+                        dispatcher.utter_message("You can't send anything at the moment")
+                        return[]
+        
+                    if signal_position:
+                        if signal_position == 8:
+                            dispatcher.utter_message("Congratulations, brave astronaut! You've successfully aligned the satellite dish and sent a powerful distress signal to the coordinates Latitude: 52.1352507 and Longitude: 11.6388062. Your message has been received, and rescue ships are en route to your location. Help is on the way!")
+                            dispatcher.utter_message("As you stand by the communication console, the anxiety and intensity of the mission begin to fade. A sense of surreal clarity washes over you, and you suddenly realize the truth – it was all a vivid dream. You take a deep breath, relieved to be safely back in the realm of reality. The control panels, the navigation screen, the airlock door – all dissolve into the fading echoes of the dream. You find yourself waking up in your own comfortable bed, surrounded by the familiar comforts of your home.")
+                            return[SlotSet("is_game_over", True)]
+                        else:
+                            current_lives = tracker.get_slot("lives")
+                            if current_lives:
+                                dispatcher.utter_message("Uh-oh, it seems there might have been a slight miscalculation. The distress signal you sent encountered interference and failed to reach its intended destination.")
+                                dispatcher.utter_message(f"You have lost precious time and a life. You have {current_lives-1} lives left.")
+                                if current_lives-1 <= 0:
+                                    dispatcher.utter_message(text=f"GAME OVER")
+                                    dispatcher.utter_message(text=f"If you want to play again please refresh the page.")
+                                    return[SlotSet("is_game_over", True)]
+                                
+                                return[SlotSet("lives", current_lives-1)]
+
 
                 dispatcher.utter_message(f"You can't use the {used_item}")
                 return[]
@@ -813,7 +870,7 @@ class ActionSendSignal(Action):
         current_room = tracker.get_slot("current_room")
         if current_room:
             if current_room != "tareq_room":
-                dispatcher.utter_message(f"Please focus {name}!")
+                dispatcher.utter_message(f"Hey, please focus on the game!")
                 return[]
 
         signal_position = tracker.get_slot("signal_position")

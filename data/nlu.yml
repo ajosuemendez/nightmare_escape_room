@@ -582,14 +582,18 @@ nlu:
     - check [door](looked_item)
     - check the [wires](looked_item)
     - inspect [screen](looked_item)
+    - check the [compartment](looked_item)
+    - inspect [compartment](looked_item)
+    - look at [compartment](looked_item)
     - explore [surroundings](looked_item)
 
 - intent: activate
   examples: |
     - activate power
     - turn on power
-    - start power engine
-    - run power 
+    - turn on the switch
+    - move the switch on
+    - turn it on
 
 
 - intent: play_activity
@@ -605,15 +609,18 @@ nlu:
 
 - intent: use
   examples: |
-    - use [red cable a1](used_item)
-    - connect the [red cable a1](used_item)
-    - reconnect [red cable a1](used_item)
-    - use the [green cable a2](used_item)
-    - connect the [green cable a2](used_item)
-    - reconnect [green cable a2](used_item)
-    - use the [blue cable a3](used_item)
-    - connect the [blue cable a3](used_item)
-    - reconnect [blue cable a3](used_item)
+    - use [red cable 1a](used_item)
+    - connect the [red cable 1a](used_item)
+    - connect [1a](used_item)
+    - use [2a](used_item)
+    - reconnect [3a](used_item)
+    - reconnect [red cable 1a](used_item)
+    - use the [green cable 2a](used_item)
+    - connect the [green cable 2a](used_item)
+    - reconnect [green cable 2a](used_item)
+    - use the [blue cable 3a](used_item)
+    - connect the [blue cable 3a](used_item)
+    - reconnect [blue cable 3a](used_item)
     - press [left button](used_item)
     - use the [right button](used_item)
     - push the [left button](used_item)
@@ -621,6 +628,9 @@ nlu:
     - hold down [right button](used_item)
     - press the [left](used_item) one
     - touch the [right](used_item) one
+    - hold down [center button](used_item)
+    - press the [center](used_item) one
+    - touch the [center](used_item) one
 
 - intent: send
   examples: |
