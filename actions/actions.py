@@ -5,16 +5,15 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 puzzle_hints = {
-    "son_puzzle": ["You can have it if you are married (You have used 1/3 hints for the current puzzle)", "when they grow up they can become super annoying (You have used 2/3 hints for the current puzzle)", "It starts with S and ends with ON (You have used 3/3 hints for the current puzzle)"],
-    "math_puzzle": ["There is a relation between the actual sum of the numbers and the ones which have been assumed! (You have used 1/3 hints for the current puzzle)", "It is easier than you think! The multiplication grows sequentially! (You have used 2/3 hints for the current puzzle)", "It is a 3 digit numbers and it start with a 2. (You have used 3/3 hints for the current puzzle)"],
-    "east_puzzle": ["I suggest to look around (You have used 1/2 hints for the current puzzle)", "look for something related to the answer to the previous puzzle in another direction! (You have used 2/2 hints for the current puzzle)"],
-    "north_puzzle": ["I suggest to look around (You have used 1/2 hints for the current puzzle)", "you can figure it out from the answer of the previous puzzle! (You have used 2/2 hints for the current puzzle)"],
-    # "south_puzzle": ["There is something common in this part and the picture on the laptop", "you can figure it out from the answer of the previous puzzle!"],
+    "son_puzzle": ["You can have it if you are married (You have used 1/3 hints for the current puzzle)", "When they grow up they can become super annoying (You have used 2/3 hints for the current puzzle)", "It starts with the letter S and ends with the letters ON (You have used 3/3 hints for the current puzzle)"],
+    "math_puzzle": ["There is a relation between the actual sum of the numbers! (You have used 1/3 hints for the current puzzle)", "It is easier than you think! The multiplication grows sequentially! (You have used 2/3 hints for the current puzzle)", "It is a digit of 3 numbers and starts with the number 2. (You have used 3/3 hints for the current puzzle)"],
+    "east_puzzle": ["I suggest to look around (You have used 1/2 hints for the current puzzle)", "Look for something related to the answer of the previous puzzle in another direction! (You have used 2/2 hints for the current puzzle)"],
+    "north_puzzle": ["I suggest to look around (You have used 1/2 hints for the current puzzle)", "You can figure it out from the answer of the previous puzzle! (You have used 2/2 hints for the current puzzle)"],
     "chess_puzzle": ["Pay attention to the activities of other people! They may need another one to accomplish their job! (You have used 1/3 hints for the current puzzle)", "Maybe he is involved with another one! (You have used 2/3 hints for the current puzzle)", "There is a Person who cannot do their job/activity without another person (You have used 3/3 hints for the current puzzle)"],
     "activate_puzzle": ["The spaceship's power is down. Look around to find more clues. (You have used 1/3 hints for the current puzzle)", "Take a closer look at the captain's chair (You have used 2/3 hints for the current puzzle)", "Try to turn on the power switch! (You have used 3/3 hints for the current puzzle)"],
     "direction_puzzle": ["I suggest you to choose a direction to go! (You have used 1/1 hints for the current puzzle)"],
     "wires_puzzle": ["Try taking a closer look to the navigation screen (You have used 1/3 hints for the current puzzle)", "Maybe there is someting wrong with the wires (You have used 2/3 hints for the current puzzle)", "Check the wires and if you haved already done that then try reconnecting one of the cables with the smallest current! (You have used 3/3 hints for the current puzzle)"],
-    "signal_puzzle": ["Try taking a closer look to the navigation console (You have used 1/3 hints for the current puzzle)", "Press the left and right buttons to improve the amplifier signal (You have used 2/3 hints for the current puzzle)", "The strongest signal is related to the current time (You have used 3/3 hints for the current puzzle)"]
+    "signal_puzzle": ["Try taking a closer look to the communication console (You have used 1/3 hints for the current puzzle)", "Press the left and right buttons to improve the amplifier signal (You have used 2/3 hints for the current puzzle)", "The strongest signal is related to the current time (You have used 3/3 hints for the current puzzle)"]
 }
 
 class ActionSayName(Action):
@@ -31,7 +30,7 @@ class ActionSayName(Action):
         is_game_over = tracker.get_slot("is_game_over")
         
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         if not name:
@@ -44,8 +43,8 @@ class ActionSayName(Action):
                 return[]
         else:
             if tracker.get_slot("current_puzzle_to_solve") is None:
-                dispatcher.utter_message(text=f"Hi {name}, Delwan is a young programmer who was working on a Chabot game when she suddenly fell asleep. In her dream, she heard a voice and woke up, but to her surprise, she found herself trapped in her own nightmare. As you begin playing the game in this room, you become stuck with her. Delwan is confused and unable to figure out how to escape. Your help is crucial, or both of you will remain trapped forever! First and foremost, you should know that you need a password to open the door. However, there's a problem: if you enter the wrong password three times, the game will be over!!!")
-                dispatcher.utter_message(text="Be careful and pay attention to all the objects you come across. To obtain the password, you must solve three puzzles. The answer to the first puzzle will be a clue for the second one, and the answer to the second puzzle will be a clue for the last one. By solving the final puzzle, you will receive the password!")
+                dispatcher.utter_message(text=f"Hi {name}, Delwan is a young programmer who was working on a Chabot game when she suddenly fell asleep. In her dream, she heard a voice and woke up, but to her surprise, she found herself trapped in her own nightmare. As you begin playing the game in this room, you become stuck with her. Delwan is confused and unable to figure out how to escape. Your help is crucial, or both of you will remain trapped forever! First and foremost, you should know that you need a password to open the door.")
+                dispatcher.utter_message(text="Be careful and pay attention to all the objects you come across. To obtain the password, you must solve three puzzles. The answer of the first puzzle will be a clue for the second one, and the answer of the second puzzle will be a clue for the last one. By solving the final puzzle, you will receive the password!")
                 dispatcher.utter_message(text="You can always ask for help anytime!")
                 dispatcher.utter_message(text="Are you ready to start?")
 
@@ -65,7 +64,7 @@ class ActionAffirmStartGame(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         is_already_started = tracker.get_slot("is_already_started")
@@ -86,14 +85,14 @@ class ActionAffirmStartGame(Action):
 
         if intent == "affirm_to_play":
             dispatcher.utter_message("You woke up in the center of the room!")
-            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
+            dispatcher.utter_message("In the north you see a window overlooking the ocean (yes that's weird because she is living in the jungle where polar bears are living!). You can enjoy a beautiful sunset there!")
             dispatcher.utter_message("On the east you see a table with some objects on it.")
             dispatcher.utter_message("On the south there is door which seems to be the exit door!")
             dispatcher.utter_message("On the west you see a board with some lines written on it and also a broken chair")
             dispatcher.utter_message("Which direction do you want to go?")
         elif intent == "deny_to_play":
             dispatcher.utter_message("I was just being nice! You have no choice! Play or die!")
-            dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
+            dispatcher.utter_message("In the north you see a window overlooking the ocean (yes that's weird because she is living in the jungle where polar bears are living!). You can enjoy a beautiful sunset there!")
             dispatcher.utter_message("On the east you see a table with some objects on it.")
             dispatcher.utter_message("On the south there is door which seems to be the exit door!")
             dispatcher.utter_message("On the west you see a board with some lines written on it and also a broken chair")
@@ -115,7 +114,7 @@ class ActionGiveDirection(Action):
         
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         direction = tracker.get_slot("direction")
@@ -133,11 +132,11 @@ class ActionGiveDirection(Action):
             if direction == "west":
                 is_puzzle_already_solved = tracker.get_slot("is_son_puzzle_solved")
                 if is_puzzle_already_solved:
-                    dispatcher.utter_message(text=f"You have already solved this puzzle, look around any other part of the room")
+                    dispatcher.utter_message(text=f"You have already solved this riddle. Look around for more clues.")
                     return []
 
                 dispatcher.utter_message("There is a puzzle on the board")
-                dispatcher.utter_message("Brothers and sisters have I none, but the father of the man is the father of my son, what is the man's relationship to me?")
+                dispatcher.utter_message("Brothers and sisters have I none, but the father of the man is the father of my son. What is man's relationship with me?")
                 return [SlotSet("current_puzzle_to_solve", "son_puzzle")]
 
             if direction == "east":
@@ -149,7 +148,7 @@ class ActionGiveDirection(Action):
 
                 is_puzzle_already_solved = tracker.get_slot("is_math_puzzle_solved")
                 if is_puzzle_already_solved:
-                    dispatcher.utter_message(text=f"You have already solved this puzzle, look around any other part of the room")
+                    dispatcher.utter_message(text=f"You have already solved this riddle. Look around for more clues.")
                     return []
                 dispatcher.utter_message("There are two laptops on the table. You are able to select one of them. Be careful! If you choose the wrong one you will lose a life! One of them works with IOS operating system and the other one with windows! Which one do you want?")
                 return [SlotSet("current_puzzle_to_solve", "east_puzzle")]
@@ -167,7 +166,7 @@ class ActionGiveDirection(Action):
                     return []
 
                 dispatcher.utter_message("There is a safe box. Solve the following puzzle to open it and get the key for the exit door!")
-                dispatcher.utter_message("There are 4 people in a room, Sam is reading, Mahsa is watching TV, Rayan is playing chess, what Sepehr is doing?")
+                dispatcher.utter_message("There are 4 people in a room, Sam is reading, Mahsa is watching TV, Rayan is playing chess. What is Sepehr doing?")
                 return [SlotSet("current_puzzle_to_solve", "chess_puzzle")]
         else:
             dispatcher.utter_message("Sorry try again!")
@@ -188,7 +187,7 @@ class ActionSonPuzzle(Action):
         
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         name = tracker.get_slot("name")
@@ -236,7 +235,7 @@ class ActionMathPuzzle(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         current_room = tracker.get_slot("current_room")
@@ -245,11 +244,11 @@ class ActionMathPuzzle(Action):
                 lock_answer = tracker.get_slot("math_answer")
                 is_easter_egg_solved = tracker.get_slot("is_easter_egg_solved")
                 if is_easter_egg_solved:
-                    dispatcher.utter_message("You already solved the combination lock for the compartment")
+                    dispatcher.utter_message("You have already solved the combination lock for the compartment.")
                     return[]
                 if lock_answer == "39104":
                     current_lives = tracker.get_slot("lives")
-                    dispatcher.utter_message("Yes! You open the compartment and you found a medal with the inscriptions 'I <3 M'")
+                    dispatcher.utter_message("Yes! You have opened the compartment and found a medal with the inscription 'I <3 M'")
                     dispatcher.utter_message(f"You also unlocked the achievement 'True Explorer' and gain an extra life. You have {current_lives+1} lives left.")
                     dispatcher.utter_message("Keep exploring and to find more achivements to brag about!")
                     return[SlotSet("lives", current_lives+1), SlotSet("is_easter_egg_solved", True)]
@@ -296,7 +295,7 @@ class DefaultFallbackAction(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         # Custom fallback response message
@@ -317,7 +316,7 @@ class GetHints(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         if tracker.get_slot("current_puzzle_to_solve") is None:
@@ -445,7 +444,7 @@ class ActionPickItem(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         picked_item = tracker.get_slot("picked_item")
@@ -471,8 +470,13 @@ class ActionPickItem(Action):
                     return [SlotSet("lives", current_lives-1)]
 
             elif picked_item.lower().find("windows") != -1:
-                dispatcher.utter_message("You can see a puzzle on the screen saver, solve it to turn it on!")
-                dispatcher.utter_message("according to the first three equations, try to find the answer to the fourth one: \n21+10=31\n22+20=84\n23+30=159\n24+50=?")
+                dispatcher.utter_message("You can see a puzzle on the screen saver. Solve it to turn it on!")
+                dispatcher.utter_message("According to the first three equations, try to find the answer to the fourth one.")
+                dispatcher.utter_message("21+10=31")
+                dispatcher.utter_message("22+20=84")
+                dispatcher.utter_message("23+30=159")
+                dispatcher.utter_message("24+50=?")
+
                 return [SlotSet("current_puzzle_to_solve", "math_puzzle")]
             else:
                 dispatcher.utter_message(f"You can't pick the {picked_item}!")
@@ -492,7 +496,7 @@ class ActionLookItem(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         looked_item = tracker.get_slot("looked_item")
@@ -520,21 +524,21 @@ class ActionLookItem(Action):
             if looked_item.lower() == "around" or looked_item.lower() == "surroundings" or looked_item.lower() == "surrounding":
                 current_room = tracker.get_slot("current_room")
                 if current_room == "tareq_room":
-                    dispatcher.utter_message("In the middle of the room stands the captain's chair")
-                    dispatcher.utter_message("In front there is the navigation screen")
-                    dispatcher.utter_message("There is also an airlock door leading to the escape pods")
-                    dispatcher.utter_message("Next to the captain's chair is the communication console")
+                    dispatcher.utter_message("In the middle of the room stands the captain's chair.")
+                    dispatcher.utter_message("In front there is the navigation screen.")
+                    dispatcher.utter_message("There is also an airlock door leading to the escape pods.")
+                    dispatcher.utter_message("Next to the captain's chair is the communication console.")
                     return[]
                 if current_room == "hosna_room":
-                    dispatcher.utter_message("On the north you see a window with ocean view (yes that's weird because she is living in the jungle where polar bears are living!) you can enjoy a beautiful sunset there!")
-                    dispatcher.utter_message("On the east you see a table with some objects on it.")
-                    dispatcher.utter_message("On the south there is door which seems to be the exit door!")
-                    dispatcher.utter_message("On the west you see a board with some lines written on it and also a broken chair")
+                    dispatcher.utter_message("In the north you see a window overlooking the ocean (yes that's weird because she is living in the jungle where polar bears are living!). You can enjoy a beautiful sunset there!")
+                    dispatcher.utter_message("In the east you see a table with some objects on it.")
+                    dispatcher.utter_message("In the south there is door which seems to be the exit door!")
+                    dispatcher.utter_message("In the west you see a board with some lines written on it and also a broken chair")
                     return[]
             if looked_item.lower().find("captain") != -1 or looked_item.lower().find("chair") != -1:
                 current_room = tracker.get_slot("current_room")
                 if current_room == "tareq_room":
-                    dispatcher.utter_message("The captain's chair is equipped with several controls and a power switch, which is currently turned OFF. Nearby is a compartment for storing essential items.")
+                    dispatcher.utter_message("The captain's chair is equipped with several controls and a power switch, which is currently turned OFF. Nearby there is a compartment for storing essential items.")
                     return[]
                 else:
                     dispatcher.utter_message(f"There is no such {looked_item}. Try something else!")
@@ -620,7 +624,7 @@ class ActionActivatePuzzle(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         name = tracker.get_slot("name")
@@ -652,7 +656,7 @@ class ActionplayActivity(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         name = tracker.get_slot("name")
@@ -671,10 +675,10 @@ class ActionplayActivity(Action):
                 dispatcher.utter_message("Congratulations! You have successfully completed the first room!")
                 dispatcher.utter_message("You woke up again but now you are a member of an elite team of astronauts aboard the spaceship Galactic Starfire. During a mission to explore the far reaches of the galaxy, the ship gets ensnared in a mysterious space anomaly that causes critical malfunctions. Your task is to repair the ship and escape the anomaly before it's too late!")
                 dispatcher.utter_message("The room is filled with a soft humming sound, indicating that the ship's power is down.")
-                dispatcher.utter_message("In the middle of the room stands the captain's chair")
-                dispatcher.utter_message("In front there is the navigation screen")
-                dispatcher.utter_message("There is also an airlock door leading to the escape pods")
-                dispatcher.utter_message("Next to the captain's chair is the communication console")
+                dispatcher.utter_message("In the middle of the room stands the captain's chair.")
+                dispatcher.utter_message("In front there is the navigation screen.")
+                dispatcher.utter_message("There is also an airlock door leading to the escape pods.")
+                dispatcher.utter_message("Next to the captain's chair is the communication console.")
                 
                 dispatcher.utter_message(f"You can always type 'look around' to gather useful information about your surroundings")
 
@@ -701,7 +705,7 @@ class ActionUseItem(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         name = tracker.get_slot("name")
@@ -862,7 +866,7 @@ class ActionSendSignal(Action):
 
         is_game_over = tracker.get_slot("is_game_over")
         if is_game_over:
-            dispatcher.utter_message("The game is over. Please refresh the page to start a new session")
+            dispatcher.utter_message("The game is over. Please refresh the page to start a new session.")
             return[]
 
         name = tracker.get_slot("name")
