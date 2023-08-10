@@ -13,7 +13,7 @@ puzzle_hints = {
     "activate_puzzle": ["The spaceship's power is down. Look around to find more clues. (You have used 1/3 hints for the current puzzle)", "Take a closer look at the captain's chair (You have used 2/3 hints for the current puzzle)", "Try to turn on the power switch! (You have used 3/3 hints for the current puzzle)"],
     "direction_puzzle": ["I suggest you to choose a direction to go! (You have used 1/1 hints for the current puzzle)"],
     "wires_puzzle": ["Try taking a closer look to the navigation screen (You have used 1/3 hints for the current puzzle)", "Maybe there is someting wrong with the wires (You have used 2/3 hints for the current puzzle)", "Check the wires and if you haved already done that then try reconnecting one of the cables with the smallest current! (You have used 3/3 hints for the current puzzle)"],
-    "signal_puzzle": ["Try taking a closer look to the communication console (You have used 1/3 hints for the current puzzle)", "Press the left and right buttons to improve the amplifier signal (You have used 2/3 hints for the current puzzle)", "The strongest signal is related to the current time (You have used 3/3 hints for the current puzzle)"]
+    "signal_puzzle": ["Try taking a closer look to the communication console (You have used 1/3 hints for the current puzzle)", "Press the left or the right button to position the satellite and improve the amplifier signal (You have used 2/3 hints for the current puzzle)", "The strongest signal is related to the current time (You have used 3/3 hints for the current puzzle)"]
 }
 
 class ActionSayName(Action):
